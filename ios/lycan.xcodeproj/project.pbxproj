@@ -14,6 +14,7 @@
 		0B84FBFA1E295FA50075E8EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B84FBF91E295FA50075E8EC /* Main.storyboard */; };
 		0B84FBFD1E29620C0075E8EC /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B84FBFC1E29620C0075E8EC /* JoinViewController.swift */; };
 		0B84FC001E2971400075E8EC /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B84FBFF1E2971400075E8EC /* ReadyViewController.swift */; };
+		0B84FC001E2971400075E8EC /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B84FBFF1E2971400075E8EC /* ReadyViewController.swift */; };
 		8C02ED7A1E297906007CA0F8 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C02ED791E297906007CA0F8 /* Networking.swift */; };
 		8C04A3C51E2976560008514E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8C04A3C41E2976560008514E /* Podfile */; };
 		8C544C531E29811300563A9B /* JoinGameResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C544C521E29811300563A9B /* JoinGameResponse.swift */; };
@@ -51,6 +52,7 @@
 		0B84FBF61E295F640075E8EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B84FBF91E295FA50075E8EC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0B84FBFC1E29620C0075E8EC /* JoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
+		0B84FBFF1E2971400075E8EC /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyViewController.swift; sourceTree = "<group>"; };
 		0B84FBFF1E2971400075E8EC /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyViewController.swift; sourceTree = "<group>"; };
 		42B11327491BA0C57987DD68 /* Pods-lycan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lycan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lycan/Pods-lycan.debug.xcconfig"; sourceTree = "<group>"; };
 		7A842579F0FE00C7260B700C /* Pods_lycan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lycan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,7 +153,7 @@
 		0B84FBF11E295EB10075E8EC /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				0B84FBFE1E29711D0075E8EC /* ready */,
+				0B9607F61E297D4100A0F3AF /* lobby */,
 				0B84FBFB1E2961EE0075E8EC /* join */,
 			);
 			path = ui;
@@ -182,12 +184,15 @@
 			path = join;
 			sourceTree = "<group>";
 		};
-		0B84FBFE1E29711D0075E8EC /* ready */ = {
+		0B9607F61E297D4100A0F3AF /* lobby */ = {
 			isa = PBXGroup;
 			children = (
-				0B84FBFF1E2971400075E8EC /* ReadyViewController.swift */,
+				0B9607F71E297D4100A0F3AF /* ConnectedPlayer.swift */,
+				0B9607F81E297D4100A0F3AF /* ConnectedPlayerTableViewCell.swift */,
+				0B9607F91E297D4100A0F3AF /* LobbyViewController.swift */,
+				0B9607FA1E297D4100A0F3AF /* LobbyViewModel.swift */,
 			);
-			path = ready;
+			path = lobby;
 			sourceTree = "<group>";
 		};
 		36325B09E2D0A3D3B506DBB7 /* Pods */ = {
@@ -421,8 +426,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B9607FC1E297D4100A0F3AF /* ConnectedPlayerTableViewCell.swift in Sources */,
+				0B9607FD1E297D4100A0F3AF /* LobbyViewController.swift in Sources */,
+				0B9607FB1E297D4100A0F3AF /* ConnectedPlayer.swift in Sources */,
+				0B9607FE1E297D4100A0F3AF /* LobbyViewModel.swift in Sources */,
 				0B84FBFD1E29620C0075E8EC /* JoinViewController.swift in Sources */,
-				8C544C531E29811300563A9B /* JoinGameResponse.swift in Sources */,
 				0B84FC001E2971400075E8EC /* ReadyViewController.swift in Sources */,
 				0B84FBF41E295EDE0075E8EC /* AppDelegate.swift in Sources */,
 				8C02ED7A1E297906007CA0F8 /* Networking.swift in Sources */,
