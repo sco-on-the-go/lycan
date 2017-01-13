@@ -1,0 +1,194 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v1.0",
+    "signature": "06ab6c0610f94d16f0d24ba796874f64472a46a5"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v1.0": {
+      "Lycan.API/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1",
+          "Amazon.Lambda.Core": "1.0.0",
+          "Amazon.Lambda.APIGatewayEvents": "1.0.1",
+          "Amazon.Lambda.Serialization.Json": "1.0.1",
+          "AWSSDK.DynamoDBv2": "3.3.1.1"
+        },
+        "runtime": {
+          "Lycan.API.dll": {}
+        }
+      },
+      "Amazon.Lambda.APIGatewayEvents/1.0.1": {
+        "dependencies": {
+          "System.Runtime.Serialization.Primitives": "4.1.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Amazon.Lambda.APIGatewayEvents.dll": {}
+        }
+      },
+      "Amazon.Lambda.Core/1.0.0": {
+        "runtime": {
+          "lib/netstandard1.3/Amazon.Lambda.Core.dll": {}
+        }
+      },
+      "Amazon.Lambda.Serialization.Json/1.0.1": {
+        "dependencies": {
+          "Amazon.Lambda.Core": "1.0.0",
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Amazon.Lambda.Serialization.Json.dll": {}
+        }
+      },
+      "Amazon.Lambda.Tools/1.1.0-preview1": {
+        "dependencies": {
+          "AWSSDK.CloudFormation": "3.3.3",
+          "AWSSDK.IdentityManagement": "3.3.0.3",
+          "AWSSDK.Lambda": "3.3.2",
+          "AWSSDK.S3": "3.3.4"
+        },
+        "runtime": {
+          "lib/netcoreapp1.0/dotnet-lambda.dll": {}
+        }
+      },
+      "AWSSDK.CloudFormation/3.3.3": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.5.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.CloudFormation.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.3.5.1": {
+        "dependencies": {
+          "System.Collections.NonGeneric": "4.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.Core.dll": {}
+        }
+      },
+      "AWSSDK.DynamoDBv2/3.3.1.1": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.5.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.DynamoDBv2.dll": {}
+        }
+      },
+      "AWSSDK.IdentityManagement/3.3.0.3": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.5.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.IdentityManagement.dll": {}
+        }
+      },
+      "AWSSDK.Lambda/3.3.2": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.5.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.Lambda.dll": {}
+        }
+      },
+      "AWSSDK.S3/3.3.4": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.5.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.S3.dll": {}
+        }
+      },
+      "Newtonsoft.Json/9.0.1": {
+        "dependencies": {
+          "System.Runtime.Serialization.Primitives": "4.1.1"
+        },
+        "runtime": {
+          "lib/netstandard1.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "System.Collections.NonGeneric/4.0.1": {
+        "runtime": {
+          "lib/netstandard1.3/System.Collections.NonGeneric.dll": {}
+        }
+      },
+      "System.Runtime.Serialization.Primitives/4.1.1": {
+        "runtime": {
+          "lib/netstandard1.3/System.Runtime.Serialization.Primitives.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Lycan.API/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Amazon.Lambda.APIGatewayEvents/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TibrY+RjMI2tPLOi2V0s/BUn6Be2sm0Tel1zYuxKm4NbXruec3D29i0Em80x4CKBxUuZnAT8QBS7dI2ghziKpg=="
+    },
+    "Amazon.Lambda.Core/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+pBYGHaOaDAhu2j8BA5MhKLwxZM7lgmTSroGyCzEqWMBx+uc+QtpED2ShCAkKjKeedXH+LvJpQAUkEtW7rfcgQ=="
+    },
+    "Amazon.Lambda.Serialization.Json/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5kO/u38+UOUQuNU+8rQpi1cPYUtlT9DMmVnohsj0jIlPjDwhZMXtOxCx8BEosRTAcQIU8AcgchqCYQa5Wm8n8g=="
+    },
+    "Amazon.Lambda.Tools/1.1.0-preview1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UevA2WLP7gnwwXvcHnECY3QNXBJyG4/ART6i9E4trmvCpsh8zH1FbfUl07JN6+UP37p+WDlpzfQPUjIYaPj8yw=="
+    },
+    "AWSSDK.CloudFormation/3.3.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JgYlheiokoM7KKdLi0OQftnUChmwm6x2oAaSq6RdyRwTh1RGv+9Znbspbj457FgEKH0a33c7GSTHn8TDACaeAA=="
+    },
+    "AWSSDK.Core/3.3.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RoO3ZKRL+dA4YnYB5Tx0/T3UPNT0gBiFk87dkVZTVmh1GGMtGNDndADG/O6wqicI0XZPj3UveIuJX91vbsD0Og=="
+    },
+    "AWSSDK.DynamoDBv2/3.3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AhlZLn1a7HLiBkLx76gqhp7gAJ/SHtz0hbIBGokkQ8wsz1ab2fIz1CsLn2zkd8ZsBT5/Z6/Qm6N7kb4hfAumRw=="
+    },
+    "AWSSDK.IdentityManagement/3.3.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GdJMPqNY8ioO5oOpNWAxBMAzNfN//49iEHCiIYlnhh8KNN4YJye62A6DP4SMypJMFajlaz3CBop+8RH38ShdUw=="
+    },
+    "AWSSDK.Lambda/3.3.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2ygNYXSnqcAvnOtQ8moK/mLvc95+DGt0aUPLDLQkpiFPsxNW+WuDMg8UHzQCYBp8kcFWIzROpJJEfQ2bJdEAug=="
+    },
+    "AWSSDK.S3/3.3.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Bs6F+mpNlQN85PP/J7zjcxx9HLRxR+OrmI+g/BdfuPmV0qoks0qK3esxSURVeuhz8dDsr8O0OFd9A3GpzVqakA=="
+    },
+    "Newtonsoft.Json/9.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw=="
+    },
+    "System.Collections.NonGeneric/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hMxFT2RhhlffyCdKLDXjx8WEC5JfCvNozAZxCablAuFRH74SCV4AgzE8yJCh/73bFnEoZgJ9MJmkjQ0dJmnKqA=="
+    },
+    "System.Runtime.Serialization.Primitives/4.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HZ6Du5QrTG8MNJbf4e4qMO3JRAkIboGT5Fk804uZtg3Gq516S7hAqTm2UZKUHa7/6HUGdVy3AqMQKbns06G/cg=="
+    }
+  }
+}

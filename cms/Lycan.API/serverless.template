@@ -1,0 +1,58 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Transform" : "AWS::Serverless-2016-10-31",
+  "Description" : "Lycan API",
+
+  "Resources" : {
+
+    "GetAsync" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "Lycan.API::Lycan.API.Functions::GetAsync",
+        "Runtime": "dotnetcore1.0",
+        "CodeUri": "",
+        "Description": "Function to get a list of blogs",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [ "AWSLambdaFullAccess" ],
+        "Events": {
+          "PutResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/",
+              "Method": "GET"
+            }
+          }
+        }
+      }
+    },
+
+    "GetBlog" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "Lycan.API::Lycan.API.Functions::PostAsync",
+        "Runtime": "dotnetcore1.0",
+        "CodeUri": "",
+        "Description": "Function to get a single blog",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [ "AWSLambdaFullAccess" ],
+        "Events": {
+          "PutResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/",
+              "Method": "POST"
+            }
+          }
+        }
+      }
+    }
+    
+  },
+
+  "Outputs" : {
+  }
+}
