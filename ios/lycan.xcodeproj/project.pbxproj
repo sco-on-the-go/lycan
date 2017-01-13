@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B84FBC21E295D9A0075E8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B84FBC11E295D9A0075E8EC /* AppDelegate.swift */; };
-		0B84FBC91E295D9A0075E8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B84FBC81E295D9A0075E8EC /* Assets.xcassets */; };
 		0B84FBD71E295D9A0075E8EC /* lycanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B84FBD61E295D9A0075E8EC /* lycanTests.swift */; };
 		0B84FBE21E295D9A0075E8EC /* lycanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B84FBE11E295D9A0075E8EC /* lycanUITests.swift */; };
+		0B84FBF41E295EDE0075E8EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B84FBF31E295EDE0075E8EC /* AppDelegate.swift */; };
+		0B84FBF81E295F640075E8EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B84FBF61E295F640075E8EC /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,8 +32,6 @@
 
 /* Begin PBXFileReference section */
 		0B84FBBE1E295D9A0075E8EC /* lycan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lycan.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0B84FBC11E295D9A0075E8EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0B84FBC81E295D9A0075E8EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B84FBCD1E295D9A0075E8EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B84FBD21E295D9A0075E8EC /* lycanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lycanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B84FBD61E295D9A0075E8EC /* lycanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lycanTests.swift; sourceTree = "<group>"; };
@@ -41,6 +39,9 @@
 		0B84FBDD1E295D9A0075E8EC /* lycanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lycanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B84FBE11E295D9A0075E8EC /* lycanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lycanUITests.swift; sourceTree = "<group>"; };
 		0B84FBE31E295D9A0075E8EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0B84FBF21E295EDD0075E8EC /* lycan-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "lycan-Bridging-Header.h"; sourceTree = "<group>"; };
+		0B84FBF31E295EDE0075E8EC /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0B84FBF61E295F640075E8EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,9 +92,8 @@
 		0B84FBC01E295D9A0075E8EC /* lycan */ = {
 			isa = PBXGroup;
 			children = (
+				0B84FBF51E295F640075E8EC /* resources */,
 				0B84FBF01E295E150075E8EC /* src */,
-				0B84FBC11E295D9A0075E8EC /* AppDelegate.swift */,
-				0B84FBC81E295D9A0075E8EC /* Assets.xcassets */,
 				0B84FBCD1E295D9A0075E8EC /* Info.plist */,
 			);
 			path = lycan;
@@ -120,8 +120,34 @@
 		0B84FBF01E295E150075E8EC /* src */ = {
 			isa = PBXGroup;
 			children = (
+				0B84FBF11E295EB10075E8EC /* ui */,
+				0B84FBF31E295EDE0075E8EC /* AppDelegate.swift */,
+				0B84FBF21E295EDD0075E8EC /* lycan-Bridging-Header.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		0B84FBF11E295EB10075E8EC /* ui */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+		0B84FBF51E295F640075E8EC /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				0B84FBF61E295F640075E8EC /* Assets.xcassets */,
+				0B84FBF71E295F640075E8EC /* storyboards */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		0B84FBF71E295F640075E8EC /* storyboards */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +219,7 @@
 					0B84FBBD1E295D9A0075E8EC = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = GDKQNR5H4G;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
 					0B84FBD11E295D9A0075E8EC = {
@@ -234,7 +261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B84FBC91E295D9A0075E8EC /* Assets.xcassets in Resources */,
+				0B84FBF81E295F640075E8EC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B84FBC21E295D9A0075E8EC /* AppDelegate.swift in Sources */,
+				0B84FBF41E295EDE0075E8EC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,11 +419,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = GDKQNR5H4G;
 				INFOPLIST_FILE = lycan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TreeDaveGeorgeNeil.lycan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "lycan/src/lycan-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -405,11 +435,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = GDKQNR5H4G;
 				INFOPLIST_FILE = lycan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TreeDaveGeorgeNeil.lycan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "lycan/src/lycan-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
