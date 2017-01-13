@@ -14,6 +14,10 @@
 		0B84FBFA1E295FA50075E8EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B84FBF91E295FA50075E8EC /* Main.storyboard */; };
 		0B84FBFD1E29620C0075E8EC /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B84FBFC1E29620C0075E8EC /* JoinViewController.swift */; };
 		0B84FC001E2971400075E8EC /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B84FBFF1E2971400075E8EC /* ReadyViewController.swift */; };
+		8C02ED7A1E297906007CA0F8 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C02ED791E297906007CA0F8 /* Networking.swift */; };
+		8C04A3C51E2976560008514E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8C04A3C41E2976560008514E /* Podfile */; };
+		8C544C531E29811300563A9B /* JoinGameResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C544C521E29811300563A9B /* JoinGameResponse.swift */; };
+		994A884E7C9A31BBC72AEB77 /* Pods_lycan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A842579F0FE00C7260B700C /* Pods_lycan.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +52,12 @@
 		0B84FBF91E295FA50075E8EC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0B84FBFC1E29620C0075E8EC /* JoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		0B84FBFF1E2971400075E8EC /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyViewController.swift; sourceTree = "<group>"; };
+		42B11327491BA0C57987DD68 /* Pods-lycan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lycan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lycan/Pods-lycan.debug.xcconfig"; sourceTree = "<group>"; };
+		7A842579F0FE00C7260B700C /* Pods_lycan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lycan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A6556FABE36E112733C161B /* Pods-lycan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lycan.release.xcconfig"; path = "Pods/Target Support Files/Pods-lycan/Pods-lycan.release.xcconfig"; sourceTree = "<group>"; };
+		8C02ED791E297906007CA0F8 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		8C04A3C41E2976560008514E /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		8C544C521E29811300563A9B /* JoinGameResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinGameResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				994A884E7C9A31BBC72AEB77 /* Pods_lycan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,10 +89,13 @@
 		0B84FBB51E295D9A0075E8EC = {
 			isa = PBXGroup;
 			children = (
+				8C04A3C41E2976560008514E /* Podfile */,
 				0B84FBC01E295D9A0075E8EC /* lycan */,
 				0B84FBD51E295D9A0075E8EC /* lycanTests */,
 				0B84FBE01E295D9A0075E8EC /* lycanUITests */,
 				0B84FBBF1E295D9A0075E8EC /* Products */,
+				36325B09E2D0A3D3B506DBB7 /* Pods */,
+				E2DB1ABB0E15C8F893A7B2BC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +140,7 @@
 		0B84FBF01E295E150075E8EC /* src */ = {
 			isa = PBXGroup;
 			children = (
+				8C02ED781E2978FA007CA0F8 /* Networking */,
 				0B84FBF11E295EB10075E8EC /* ui */,
 				0B84FBF31E295EDE0075E8EC /* AppDelegate.swift */,
 				0B84FBF21E295EDD0075E8EC /* lycan-Bridging-Header.h */,
@@ -175,6 +190,48 @@
 			path = ready;
 			sourceTree = "<group>";
 		};
+		36325B09E2D0A3D3B506DBB7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				42B11327491BA0C57987DD68 /* Pods-lycan.debug.xcconfig */,
+				8A6556FABE36E112733C161B /* Pods-lycan.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8C02ED781E2978FA007CA0F8 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				8C544C501E29810500563A9B /* Response */,
+				8C544C511E29810500563A9B /* Request */,
+				8C02ED791E297906007CA0F8 /* Networking.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		8C544C501E29810500563A9B /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				8C544C521E29811300563A9B /* JoinGameResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		8C544C511E29810500563A9B /* Request */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		E2DB1ABB0E15C8F893A7B2BC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7A842579F0FE00C7260B700C /* Pods_lycan.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -182,9 +239,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B84FBE61E295D9A0075E8EC /* Build configuration list for PBXNativeTarget "lycan" */;
 			buildPhases = (
+				0556DB59D6012BE377724232 /* [CP] Check Pods Manifest.lock */,
 				0B84FBBA1E295D9A0075E8EC /* Sources */,
 				0B84FBBB1E295D9A0075E8EC /* Frameworks */,
 				0B84FBBC1E295D9A0075E8EC /* Resources */,
+				1087464157C7D1A29F976836 /* [CP] Embed Pods Frameworks */,
+				4E240301E21EE6A10766C860 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -243,7 +303,7 @@
 				TargetAttributes = {
 					0B84FBBD1E295D9A0075E8EC = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = GDKQNR5H4G;
+						DevelopmentTeam = 2V5QH6G67Z;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -286,6 +346,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C04A3C51E2976560008514E /* Podfile in Resources */,
 				0B84FBF81E295F640075E8EC /* Assets.xcassets in Resources */,
 				0B84FBFA1E295FA50075E8EC /* Main.storyboard in Resources */,
 			);
@@ -307,14 +368,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0556DB59D6012BE377724232 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		1087464157C7D1A29F976836 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-lycan/Pods-lycan-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4E240301E21EE6A10766C860 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-lycan/Pods-lycan-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0B84FBBA1E295D9A0075E8EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				0B84FBFD1E29620C0075E8EC /* JoinViewController.swift in Sources */,
+				8C544C531E29811300563A9B /* JoinGameResponse.swift in Sources */,
 				0B84FC001E2971400075E8EC /* ReadyViewController.swift in Sources */,
 				0B84FBF41E295EDE0075E8EC /* AppDelegate.swift in Sources */,
+				8C02ED7A1E297906007CA0F8 /* Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +479,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -418,6 +530,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -445,10 +558,12 @@
 		};
 		0B84FBE71E295D9A0075E8EC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 42B11327491BA0C57987DD68 /* Pods-lycan.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = GDKQNR5H4G;
+				DEVELOPMENT_TEAM = 2V5QH6G67Z;
 				INFOPLIST_FILE = lycan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TreeDaveGeorgeNeil.lycan;
@@ -461,10 +576,12 @@
 		};
 		0B84FBE81E295D9A0075E8EC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A6556FABE36E112733C161B /* Pods-lycan.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = GDKQNR5H4G;
+				DEVELOPMENT_TEAM = 2V5QH6G67Z;
 				INFOPLIST_FILE = lycan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TreeDaveGeorgeNeil.lycan;
