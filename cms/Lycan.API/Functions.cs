@@ -20,11 +20,6 @@ namespace Lycan.API
 {
     public class Functions
     {
-        // This const is the name of the environment variable that the serverless.template will use to set
-        // the name of the DynamoDB table used to store blog posts.
-        const string TABLENAME_ENVIRONMENT_VARIABLE_LOOKUP = "BlogTable";
-
-        public const string ID_QUERY_STRING_NAME = "Id";
         IDynamoDBContext DDBContext { get; set; }
 
         /// <summary>
@@ -32,38 +27,14 @@ namespace Lycan.API
         /// </summary>
         public Functions()
         {
-            // Check to see if a table name was passed in through environment variables and if so 
-            // add the table mapping.
-            var tableName = System.Environment.GetEnvironmentVariable(TABLENAME_ENVIRONMENT_VARIABLE_LOOKUP);
-            if(!string.IsNullOrEmpty(tableName))
-            {
-                AWSConfigsDynamoDB.Context.TypeMappings[typeof(Blog)] = new Amazon.Util.TypeMapping(typeof(Blog), tableName);
-            }
-
             var config = new DynamoDBContextConfig { Conversion = DynamoDBEntryConversion.V2 };
             this.DDBContext = new DynamoDBContext(new AmazonDynamoDBClient(), config);
-        }
-
-        /// <summary>
-        /// Constructor used for testing passing in a preconfigured DynamoDB client.
-        /// </summary>
-        /// <param name="ddbClient"></param>
-        /// <param name="tableName"></param>
-        public Functions(IAmazonDynamoDB ddbClient, string tableName)
-        {
-            if (!string.IsNullOrEmpty(tableName))
-            {
-                AWSConfigsDynamoDB.Context.TypeMappings[typeof(Blog)] = new Amazon.Util.TypeMapping(typeof(Blog), tableName);
-            }
-
-            var config = new DynamoDBContextConfig { Conversion = DynamoDBEntryConversion.V2 };
-            this.DDBContext = new DynamoDBContext(ddbClient, config);
         }
         
         public APIGatewayProxyResponse GetAsync(APIGatewayProxyRequest request, ILambdaContext context)
         {
             Random r = new Random();
-
+            
             int value = r.Next(0, 101);
             string action;
 
@@ -93,29 +64,132 @@ namespace Lycan.API
             return response;
         }
 
-        /// <summary>
-        /// A Lambda function that adds a blog post.
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public async Task<APIGatewayProxyResponse> PostAsync(APIGatewayProxyRequest request, ILambdaContext context)
+        public async Task<APIGatewayProxyResponse> HostGameAsync(APIGatewayProxyRequest request, ILambdaContext context)
         {
-            var blog = JsonConvert.DeserializeObject<Blog>(request?.Body);
-            blog.Id = Guid.NewGuid().ToString();
-            blog.CreatedTimestamp = DateTime.Now;
+            var requestBody = JsonConvert.DeserializeObject<HostGameRequest>(request?.Body);
 
-            context.Logger.LogLine($"Saving blog with id {blog.Id}");
-            await DDBContext.SaveAsync<Blog>(blog);
+            Game game = new Game() { GameId = Guid.NewGuid(), Name = requestBody.Name, State = GameStateEnum.Lobby };
 
-            var response = new APIGatewayProxyResponse
+            context.Logger.LogLine($"{requestBody.Name} has been created as a new game");
+            await DDBContext.SaveAsync(game);
+
+            return new APIGatewayProxyResponse
             {
                 StatusCode = (int)HttpStatusCode.OK,
-                Body = JsonConvert.SerializeObject(blog),
+                Body = JsonConvert.SerializeObject(new HostGameResponse()
+                {
+                    GameId = game.GameId
+                }),
                 Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
             };
-            return response;
         }
-        //AKIAJ4QFGEFSCMINKV7A
-        //ZQRqn+rPZrpncJisFwcZqtr5chViM1Aay4HOv49r
+
+        public async Task<APIGatewayProxyResponse> JoinGameAsync(APIGatewayProxyRequest request, ILambdaContext context)
+        {
+            var requestBody = JsonConvert.DeserializeObject<JoinGameRequest>(request?.Body);
+
+            var gameScanResult = DDBContext.ScanAsync<Game>(new[] { new ScanCondition("Name", Amazon.DynamoDBv2.DocumentModel.ScanOperator.Equal, requestBody.GameName) });
+            var games = await gameScanResult.GetRemainingAsync();
+            
+            if (games == null || games.Count == 0)
+                throw new Exception($"{requestBody.GameName} was not found");
+
+            var game = games.FirstOrDefault();
+
+            Player player = new Player() { PlayerId = Guid.NewGuid(), GameId = game.GameId, Name = requestBody.PlayerName, IsReady = false };
+
+            context.Logger.LogLine($"{requestBody.PlayerName} joined the game {game.GameId}");
+            await DDBContext.SaveAsync(player);
+
+            return new APIGatewayProxyResponse
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = JsonConvert.SerializeObject(new JoinGameResponse()
+                {
+                    GameId = game.GameId,
+                    PlayerId = player.PlayerId
+                }),
+                Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+            };
+        }
+
+        public async Task<APIGatewayProxyResponse> IsReadyAsync(APIGatewayProxyRequest request, ILambdaContext context)
+        {
+            var requestBody = JsonConvert.DeserializeObject<IsReadyRequest>(request?.Body);
+
+            Player player = await DDBContext.LoadAsync<Player>(requestBody.PlayerId);
+            if (player == null)
+                throw new Exception($"{requestBody.PlayerId} was not found");
+
+            player.IsReady = true;
+            await DDBContext.SaveAsync(player);
+            
+            var scanResult = DDBContext.ScanAsync<Player>(new[] { new ScanCondition("GameId", Amazon.DynamoDBv2.DocumentModel.ScanOperator.Equal, player.GameId) });
+            var players = await scanResult.GetRemainingAsync();
+
+            context.Logger.LogLine($"{players.Count(p => p.IsReady)} Ready : {players.Count(p => !p.IsReady)} Not Ready");
+
+            Game game = await DDBContext.LoadAsync<Game>(player.GameId);
+            if (game == null)
+                throw new Exception($"{player.GameId} was not found");
+
+            if (players.All(p => p.IsReady == true))
+            {
+                game.State = GameStateEnum.Ready;
+                await DDBContext.SaveAsync(player);
+            }
+
+            return new APIGatewayProxyResponse
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = JsonConvert.SerializeObject(new IsReadyResponse()
+                {
+                    Players = players.Select(p => new IsReadyResponse.PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady }).ToList(),
+                    GameState = game.State
+                }),
+                Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+            };
+        }
+
+        public class HostGameRequest
+        {
+            public string Name { get; set; }
+        }
+
+        public class HostGameResponse
+        {
+            public Guid GameId { get; set; }
+        }
+
+        public class JoinGameRequest
+        {
+            public string GameName { get; set; }
+            public string PlayerName { get; set; }
+        }
+
+        public class JoinGameResponse
+        {
+            public Guid GameId { get; set; }
+            public Guid PlayerId { get; set; }
+        }
+
+        public class IsReadyRequest
+        {
+            public Guid PlayerId { get; set; }
+        }
+
+        public class IsReadyResponse
+        {
+            public List<PlayerViewModel> Players { get; set; }
+            public GameStateEnum GameState { get; set; }
+
+            public class PlayerViewModel
+            {
+                public Guid PlayerId { get; set; }
+                public string Name { get; set; }
+                public bool IsReady { get; set; }
+            }
+        }
+
     }
 }
