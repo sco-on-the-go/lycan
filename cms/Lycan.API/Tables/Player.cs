@@ -28,5 +28,19 @@ namespace Lycan.API
         public bool IsNPC { get; set; }
         public PlayerTypeEnum PlayerType { get; set; }
         public Guid VoteForPlayerId { get; set; }
+
+        public double ColourHue { get; set; }
+        public double ColourSaturation { get; set; }
+        public double ColourBrightness { get; set; }
+
+        public void GeneratePlayerColour()
+        {
+            var r = new Random();
+
+            ColourHue = r.NextDouble();
+            ColourSaturation = (r.NextDouble() / 2) + 0.5;
+            ColourBrightness = (r.NextDouble() / 2) + 0.5;
+        }
+
     }
 }
