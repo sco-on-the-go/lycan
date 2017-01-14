@@ -82,6 +82,8 @@ namespace Lycan.API
             await DDBContext.SaveAsync(card3);
 
             Player player = new Player() { PlayerId = Guid.NewGuid(), GameId = game.GameId, Name = requestBody.PlayerName, IsReady = false };
+            player.GeneratePlayerColour();
+
             await DDBContext.SaveAsync(player);
 
             return new APIGatewayProxyResponse
@@ -109,6 +111,7 @@ namespace Lycan.API
             var game = games.FirstOrDefault();
 
             Player player = new Player() { PlayerId = Guid.NewGuid(), GameId = game.GameId, Name = requestBody.PlayerName, IsReady = false, IsNPC = false };
+            player.GeneratePlayerColour();
 
             context.Logger.LogLine($"{requestBody.PlayerName} joined the game {game.GameId}");
             await DDBContext.SaveAsync(player);
@@ -181,7 +184,7 @@ namespace Lycan.API
                 StatusCode = (int)HttpStatusCode.OK,
                 Body = JsonConvert.SerializeObject(new IsReadyResponse()
                 {
-                    Players = players.Select(p => new PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady, PlayerType = p.PlayerType, IsNPC = p.IsNPC }).ToList(),
+                    Players = players.Select(p => new PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady, PlayerType = p.PlayerType, IsNPC = p.IsNPC, VoteForPlayerId = p.VoteForPlayerId, ColourBrightness = p.ColourBrightness, ColourHue = p.ColourHue, ColourSaturation = p.ColourSaturation }).ToList(),
                     GameState = game.State,
                     PlayerType = player.PlayerType
                 }),
@@ -208,7 +211,9 @@ namespace Lycan.API
             Game game = await DDBContext.LoadAsync<Game>(player.GameId);
             if (game == null)
                 throw new Exception($"{player.GameId} was not found");
-            
+
+            bool werewolvesWon = false;
+
             if (players.All(p => p.VoteForPlayerId != Guid.Empty) && game.State == GameStateEnum.InGame)
             {
                 // Find the most voted player
@@ -217,8 +222,13 @@ namespace Lycan.API
                         let count = g.Count()
                         orderby count descending
                         select new { Value = g.Key, Count = count }).ToList();
+                
+                int highestVote = q[0].Count;
+                List<Guid> highestVotedPlayerGuids = q.Where(p => p.Count == highestVote).Select(p => p.Value).ToList();
+                List<Player> highestVotedPlayers = players.Where(p => highestVotedPlayerGuids.Contains(p.PlayerId)).ToList();
 
-                //if (q.Count > 1 && q[0].Count == )
+                // If its a tie then humans win if any werewolf are picked
+                werewolvesWon = !highestVotedPlayers.Any(p => p.PlayerType == PlayerTypeEnum.Werewolf);
 
                 game.State = GameStateEnum.GameOver;
                 await DDBContext.SaveAsync(game);
@@ -229,9 +239,9 @@ namespace Lycan.API
                 StatusCode = (int)HttpStatusCode.OK,
                 Body = JsonConvert.SerializeObject(new VoteResponse()
                 {
-                    Players = players.Select(p => new PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady, PlayerType = p.PlayerType, IsNPC = p.IsNPC }).ToList(),
+                    Players = players.Select(p => new PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady, PlayerType = p.PlayerType, IsNPC = p.IsNPC, VoteForPlayerId = p.VoteForPlayerId, ColourBrightness = p.ColourBrightness, ColourHue = p.ColourHue, ColourSaturation = p.ColourSaturation }).ToList(),
                     EveryoneVoted = game.State == GameStateEnum.GameOver,
-                    WerewolvesWon = false
+                    WerewolvesWon = werewolvesWon
                 }),
                 Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
             };
@@ -296,6 +306,9 @@ namespace Lycan.API
             public bool IsNPC { get; set; }
             public PlayerTypeEnum PlayerType { get; set; }
             public Guid VoteForPlayerId { get; set; }
+            public double ColourHue { get; set; }
+            public double ColourSaturation { get; set; }
+            public double ColourBrightness { get; set; }
         }
 
     }
