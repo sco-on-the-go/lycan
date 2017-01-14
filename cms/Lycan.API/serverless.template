@@ -95,6 +95,29 @@
           }
         }
       }
+    },
+
+    "VoteAsync" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "Lycan.API::Lycan.API.Functions::VoteAsync",
+        "Runtime": "dotnetcore1.0",
+        "CodeUri": "",
+        "Description": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [ "AWSLambdaFullAccess" ],
+        "Events": {
+          "PutResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/Vote",
+              "Method": "POST"
+            }
+          }
+        }
+      }
     }
     
   },

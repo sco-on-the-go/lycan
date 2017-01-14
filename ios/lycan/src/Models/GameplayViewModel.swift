@@ -14,8 +14,8 @@ protocol GameplayStateChanged : class {
 }
 
 protocol GameplayAction : class {
-    func canPerformActionForPlayer(_ player:Player) -> Bool
-    func playActionForPlayer(_ player:Player)
+    func canPerformActionForPlayer(_ player:ConnectedPlayer) -> Bool
+    func playActionForPlayer(_ player:ConnectedPlayer)
 }
 
 enum GameplayActionType {
@@ -44,14 +44,14 @@ class GameplayViewModel {
         let fakeState = GameStateResponse()
         fakeState.gameState = GameState.playing
         fakeState.players = [
-            Player(name:"George", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.robber),
-            Player(name:"Dave", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.seer),
-            Player(name:"Neil", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.werewolf),
-            Player(name:"Tristan", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.troublemaker),
-            Player(name:"Burf", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.villager),
-            Player(name:"Card 1", id:UUID().uuidString, isReady:true, isNPC:true, playerType:PlayerType.villager),
-            Player(name:"Card 2", id:UUID().uuidString, isReady:true, isNPC:true, playerType:PlayerType.villager),
-            Player(name:"Card 3", id:UUID().uuidString, isReady:true, isNPC:true, playerType:PlayerType.werewolf),
+            ConnectedPlayer(name:"George", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.robber),
+            ConnectedPlayer(name:"Dave", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.seer),
+            ConnectedPlayer(name:"Neil", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.werewolf),
+            ConnectedPlayer(name:"Tristan", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.troublemaker),
+            ConnectedPlayer(name:"Burf", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.villager),
+            ConnectedPlayer(name:"Card 1", id:UUID().uuidString, isReady:true, isNPC:true, playerType:PlayerType.villager),
+            ConnectedPlayer(name:"Card 2", id:UUID().uuidString, isReady:true, isNPC:true, playerType:PlayerType.villager),
+            ConnectedPlayer(name:"Card 3", id:UUID().uuidString, isReady:true, isNPC:true, playerType:PlayerType.werewolf),
         ]
         if let somePlayer = fakeState.players.first {
             fakeState.playerType = somePlayer.playerType
@@ -63,12 +63,12 @@ class GameplayViewModel {
 }
 
 extension GameplayViewModel : GameplayAction {
-    func canPerformActionForPlayer(_ player: Player) -> Bool {
+    func canPerformActionForPlayer(_ player: ConnectedPlayer) -> Bool {
         //TODO: Control the logic of whether it's your turn, the player isn't you, if you've already done the thing and whether you're deselecting (if part of a multiselect operation)
         return true
     }
     
-    func playActionForPlayer(_ player: Player) {
+    func playActionForPlayer(_ player: ConnectedPlayer) {
         //TODO: Determine valid state changes, network calls required, UI changes etc.
     }
 }
@@ -81,12 +81,12 @@ extension GameplayViewModel {
         return 0
     }
     
-    func playerAtIndex(_ index:Int) -> Player {
+    func playerAtIndex(_ index:Int) -> ConnectedPlayer {
         if let state = self.gameState {
             return state.players[index]
         } else {
             //NOTE: Never gonna happen, right?
-            return Player()
+            return ConnectedPlayer()
         }
     }
 }

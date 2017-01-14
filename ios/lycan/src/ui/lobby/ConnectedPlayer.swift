@@ -9,12 +9,19 @@
 import UIKit
 
 class ConnectedPlayer {
-    private(set) var name: String
-    private(set) var color: UIColor
-    var isReady: Bool = false
-
-    init(name: String, color: UIColor) {
+    let name: String
+    let id: String
+    var isReady: Bool
+    let isNPC: Bool
+    let playerType: PlayerType
+    
+    convenience init() { self.init(name: "", id: "", isReady: true, isNPC: false, playerType: PlayerType.villager) }
+    
+    init(name:String, id:String, isReady:Bool, isNPC:Bool, playerType:PlayerType) {
         self.name = name
-        self.color = color
+        self.id = id
+        self.isReady = isReady
+        self.isNPC = isNPC
+        self.playerType = playerType
     }
 }

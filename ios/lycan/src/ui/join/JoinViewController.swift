@@ -49,7 +49,10 @@ class JoinViewController: UIViewController {
     @IBAction func host() {
         // Call API
         Networking.hostGame(gameName: gameTextField.text!,playerName: nameTextField.text!, success: {(response) in
-            
+            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "LobbyViewController") as? LobbyViewController {
+                vc.viewModel = LobbyViewModel(delegate: vc,playerId: response.playerId)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }, failure: {(error) in
             
         })
@@ -58,12 +61,11 @@ class JoinViewController: UIViewController {
     @IBAction func join() {
         // Call API
         Networking.joinGame(playerName: nameTextField.text!, gameName: gameTextField.text!, success: { (response) in
-            Networking.isReady(playerId: response.playerId, success: { (response) in
-                print(response)
-            }, failure: { (error) in
-                
-            })
-
+            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "LobbyViewController") as? LobbyViewController {
+                vc.viewModel = LobbyViewModel(delegate: vc,playerId: response.playerId)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            
         }, failure:{ (error) in
             
         })

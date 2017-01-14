@@ -20,25 +20,14 @@ class LobbyViewModel {
     private(set) var playerList = [ConnectedPlayer]()
     private(set) var isLoading = true
     
-    init(delegate: LobbyViewModelDelegate) {
+    var playerId: String!
+    
+    init(delegate: LobbyViewModelDelegate, playerId: String) {
         self.delegate = delegate
-        
+        self.playerId = playerId
         delegate.updateReadyButton(isReady: isReady)
-        
-        // TODO: Replace the below: make API call to get players and update playerList
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
-            self.isLoading = false
-            let player1 = ConnectedPlayer(name: "Dave", color: UIColor.red)
-            player1.isReady = true
-            let player2 = ConnectedPlayer(name: "George", color: UIColor.red)
-            player2.isReady = true
-            let player3 = ConnectedPlayer(name: "Neil", color: UIColor.red)
-            player3.isReady = true
-            let player4 = ConnectedPlayer(name: "Tree", color: UIColor.red)
-            player4.isReady = true
-            self.delegate?.updatePlayersList(playerList: [player1, player2, player3, player4])
-        }
     }
+    
     
     func toggleReady() {
         // Do API Call

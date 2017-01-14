@@ -37,7 +37,7 @@ enum LycanRouter: URLRequestConvertible {
     static var oAuthToken: String?
     
     case JoinGame(String,String)
-    case IsReady(String)
+    case IsReady(String, Bool)
     case HostGame(String, String)
     
     var method: Alamofire.HTTPMethod {
@@ -57,8 +57,8 @@ enum LycanRouter: URLRequestConvertible {
             return ["PlayerName":name,"GameName":gameName]
         case .HostGame(let gameHost, let playerName):
             return ["GameName":gameHost,"PlayerName":playerName]
-        case .IsReady(let playerId):
-            return ["PlayerId":playerId]
+        case .IsReady(let playerId, let isReadied):
+            return ["PlayerId":playerId,"IsReady": isReadied]
         }
     }
     
@@ -161,11 +161,10 @@ extension Networking {
     }
     
     
-    static func isReady(playerId: String, success: @escaping (_ results: IsReadyResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
-        let router = LycanRouter.IsReady(playerId)
-        print(router.urlRequest)
+    static func isReady(playerId: String,isReadied: Bool, success: @escaping (_ results: IsReadyResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
+        let router = LycanRouter.IsReady(playerId, isReadied)
         SessionManager.default.request(router).responseJSON { (data) in
-            print(data)
+            
             let response = IsReadyResponse()
             if let json = data.result.value as? [String: Any] {
                 
@@ -179,8 +178,8 @@ extension Networking {
                             let playerType = PlayerType(rawValue: type) else {
                                 continue
                         }
-                        let player = Player(name: name, id: id, isReady: isReady, isNPC: isNPC, playerType: playerType)
-                        
+                        let player = ConnectedPlayer(name: name, id: id, isReady: isReady, isNPC: isNPC, playerType: playerType)
+
                         response.players.append(player)
                     }
                 }

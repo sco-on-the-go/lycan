@@ -11,9 +11,9 @@ import UIKit
 class BaseGameplayCell : UICollectionViewCell {
     @IBOutlet weak var roleLabel: UILabel!
     weak var interactionDelegate : GameplayAction?
-    var player:Player?
+    var player:ConnectedPlayer?
     
-    func populate(_ player:Player, interactionDelegate:GameplayAction) {
+    func populate(_ player:ConnectedPlayer, interactionDelegate:GameplayAction) {
         self.layer.cornerRadius = 50
         
         self.player = player
