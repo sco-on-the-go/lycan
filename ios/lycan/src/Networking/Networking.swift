@@ -171,22 +171,16 @@ extension Networking {
                 
                 if let players = json["Players"] as? [[String: Any]] {
                     for play in players {
-                        let player = Player()
-                        if let playerId = play["PlayerId"] as? String {
-                            player.id = playerId
+                        guard let name = play["Name"] as? String,
+                            let id = play["PlayerId"] as? String,
+                            let isReady = play["IsReady"] as? Bool,
+                            let isNPC = play["IsNPC"] as? Bool,
+                            let type = play["PlayerType"] as? Int,
+                            let playerType = PlayerType(rawValue: type) else {
+                                continue
                         }
-                        if let name = play["Name"] as? String {
-                            player.name = name
-                        }
-                        if let ready = play["IsReady"] as? Bool {
-                            player.isReady = ready
-                        }
-                        if let npc = play["IsNPC"] as? Bool {
-                            player.isNPC = npc
-                        }
-                        if let type = play["PlayerType"] as? Int {
-                            player.playerType = PlayerType(rawValue: type)
-                        }
+                        let player = Player(name: name, id: id, isReady: isReady, isNPC: isNPC, playerType: playerType)
+                        
                         response.players.append(player)
                     }
                 }

@@ -23,9 +23,29 @@ class IsReadyResponse {
     var playerType: PlayerType!
 }
 
+class GameStateResponse {
+    var gameState: GameState!
+    var players: [Player]! = []
+    var playerType: PlayerType!
+}
+
 enum GameState: Int {
     case lobby = 1
-    case ready = 2
+    case playing = 2
+    case vote = 3
+    case gameover = 4
+    
+    func name() -> String {
+        if self == .lobby {
+            return "Waiting..."
+        } else if self == .playing {
+            return "The Game is afoot!"
+        } else if self == .vote {
+            return "Time to vote!"
+        } else {
+            return "Game over!"
+        }
+    }
 }
 
 enum PlayerType: Int {
@@ -37,9 +57,19 @@ enum PlayerType: Int {
 }
 
 class Player {
-    var name: String!
-    var id: String!
-    var isReady: Bool!
-    var isNPC: Bool!
-    var playerType: PlayerType!
+    let name: String
+    let id: String
+    var isReady: Bool
+    let isNPC: Bool
+    let playerType: PlayerType
+    
+    convenience init() { self.init(name: "", id: "", isReady: true, isNPC: false, playerType: PlayerType.villager) }
+    
+    init(name:String, id:String, isReady:Bool, isNPC:Bool, playerType:PlayerType) {
+        self.name = name
+        self.id = id
+        self.isReady = isReady
+        self.isNPC = isNPC
+        self.playerType = playerType
+    }
 }
