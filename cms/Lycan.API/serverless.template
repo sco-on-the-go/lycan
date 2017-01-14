@@ -27,14 +27,14 @@
         }
       }
     },
-
-    "GetBlog" : {
+	
+    "HostGameAsync" : {
       "Type" : "AWS::Serverless::Function",
       "Properties": {
-        "Handler": "Lycan.API::Lycan.API.Functions::PostAsync",
+        "Handler": "Lycan.API::Lycan.API.Functions::HostGameAsync",
         "Runtime": "dotnetcore1.0",
         "CodeUri": "",
-        "Description": "Function to get a single blog",
+        "Description": "",
         "MemorySize": 256,
         "Timeout": 30,
         "Role": null,
@@ -43,7 +43,76 @@
           "PutResource": {
             "Type": "Api",
             "Properties": {
-              "Path": "/",
+              "Path": "/HostGame",
+              "Method": "POST"
+            }
+          }
+        }
+      }
+    },
+
+    "JoinGameAsync" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "Lycan.API::Lycan.API.Functions::JoinGameAsync",
+        "Runtime": "dotnetcore1.0",
+        "CodeUri": "",
+        "Description": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [ "AWSLambdaFullAccess" ],
+        "Events": {
+          "PutResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/JoinGame",
+              "Method": "POST"
+            }
+          }
+        }
+      }
+    },
+
+    "IsReadyAsync" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "Lycan.API::Lycan.API.Functions::IsReadyAsync",
+        "Runtime": "dotnetcore1.0",
+        "CodeUri": "",
+        "Description": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [ "AWSLambdaFullAccess" ],
+        "Events": {
+          "PutResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/IsReady",
+              "Method": "POST"
+            }
+          }
+        }
+      }
+    },
+
+    "VoteAsync" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "Lycan.API::Lycan.API.Functions::VoteAsync",
+        "Runtime": "dotnetcore1.0",
+        "CodeUri": "",
+        "Description": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [ "AWSLambdaFullAccess" ],
+        "Events": {
+          "PutResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/Vote",
               "Method": "POST"
             }
           }

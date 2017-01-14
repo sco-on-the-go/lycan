@@ -11,6 +11,7 @@ import UIKit
 class LobbyViewController: UIViewController {
 
     @IBOutlet var readyButton: UIButton!
+    @IBOutlet var startButton: UIButton!
     @IBOutlet var noPlayersLabel: UILabel!
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var collectionView: UICollectionView!
@@ -79,7 +80,7 @@ extension LobbyViewController: UICollectionViewDataSource {
 extension LobbyViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.size.width - 20) / 3 // hack - FLAVOUR
+        let width = collectionView.frame.size.width / 3 // hack
         return CGSize(width: width, height: width)
     }
 }
@@ -91,6 +92,7 @@ extension LobbyViewController: LobbyViewModelDelegate {
         noPlayersLabel.isHidden = playerList.count > 0
         self.playerList = playerList
         collectionView.reloadData()
+        startButton.isEnabled = playerList.filter({ $0.isReady }).count == playerList.count
     }
     
     func updateReadyButton(isReady: Bool) {
