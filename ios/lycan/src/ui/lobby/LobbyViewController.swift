@@ -46,7 +46,7 @@ class LobbyViewController: UIViewController {
             
             self.updatePlayersList(playerList: response.players)
 
-            if response.gameState == .ready {
+            if response.gameState == GameState.playing {
                 self.showCoolNumbersAnimation(completion: {
                     self.performSegue(withIdentifier: self.toRoleSegue, sender: self)
                 })
@@ -115,7 +115,7 @@ extension LobbyViewController: UICollectionViewDataSource {
             let player = playerList[indexPath.row]
             cell.nameLabel.text = player.name
             cell.readyImageView.isHidden = !player.isReady
-            cell.containerView.backgroundColor = player.color.withAlphaComponent(0.6)
+            //cell.containerView.backgroundColor = player.color.withAlphaComponent(0.6)
             return cell
         } else {
             return UICollectionViewCell()

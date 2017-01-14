@@ -15,6 +15,12 @@
 		0B84FBFD1E29620C0075E8EC /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B84FBFC1E29620C0075E8EC /* JoinViewController.swift */; };
 		0BB0C2371E299C6800389225 /* RoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB0C2361E299C6800389225 /* RoleViewController.swift */; };
 		0BB0C2391E29AD0D00389225 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BB0C2381E29AD0D00389225 /* Launch Screen.storyboard */; };
+		4B562B041E29AC8D00DEE8CE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B562B031E29AC8D00DEE8CE /* GameViewController.swift */; };
+		4B562B071E29ACF900DEE8CE /* GameplayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B562B061E29ACF900DEE8CE /* GameplayViewModel.swift */; };
+		4B562B091E29B71200DEE8CE /* CardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B562B081E29B71200DEE8CE /* CardViewCell.swift */; };
+		4B562B0B1E29B73300DEE8CE /* PlayerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B562B0A1E29B73300DEE8CE /* PlayerViewCell.swift */; };
+		4B562B0D1E29BA0800DEE8CE /* BaseGameplayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B562B0C1E29BA0800DEE8CE /* BaseGameplayCell.swift */; };
+		4BF65A7A1E29C71500BF68A4 /* Gameplay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF65A791E29C71500BF68A4 /* Gameplay.storyboard */; };
 		8C02ED7A1E297906007CA0F8 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C02ED791E297906007CA0F8 /* Networking.swift */; };
 		8C571AC11E298546000F2169 /* ConnectedPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C571ABD1E298546000F2169 /* ConnectedPlayer.swift */; };
 		8C571AC21E298546000F2169 /* ConnectedPlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C571ABE1E298546000F2169 /* ConnectedPlayerTableViewCell.swift */; };
@@ -59,6 +65,12 @@
 		0BB0C2361E299C6800389225 /* RoleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleViewController.swift; sourceTree = "<group>"; };
 		0BB0C2381E29AD0D00389225 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		42B11327491BA0C57987DD68 /* Pods-lycan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lycan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lycan/Pods-lycan.debug.xcconfig"; sourceTree = "<group>"; };
+		4B562B031E29AC8D00DEE8CE /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		4B562B061E29ACF900DEE8CE /* GameplayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayViewModel.swift; sourceTree = "<group>"; };
+		4B562B081E29B71200DEE8CE /* CardViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewCell.swift; sourceTree = "<group>"; };
+		4B562B0A1E29B73300DEE8CE /* PlayerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewCell.swift; sourceTree = "<group>"; };
+		4B562B0C1E29BA0800DEE8CE /* BaseGameplayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseGameplayCell.swift; sourceTree = "<group>"; };
+		4BF65A791E29C71500BF68A4 /* Gameplay.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Gameplay.storyboard; sourceTree = "<group>"; };
 		7A842579F0FE00C7260B700C /* Pods_lycan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lycan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A6556FABE36E112733C161B /* Pods-lycan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lycan.release.xcconfig"; path = "Pods/Target Support Files/Pods-lycan/Pods-lycan.release.xcconfig"; sourceTree = "<group>"; };
 		8C02ED791E297906007CA0F8 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -149,6 +161,7 @@
 		0B84FBF01E295E150075E8EC /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4B562B051E29ACB600DEE8CE /* Models */,
 				8C02ED781E2978FA007CA0F8 /* Networking */,
 				0B84FBF11E295EB10075E8EC /* ui */,
 				0B84FBF31E295EDE0075E8EC /* AppDelegate.swift */,
@@ -160,6 +173,7 @@
 		0B84FBF11E295EB10075E8EC /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				4B562B021E29AC5700DEE8CE /* game */,
 				0BB0C2351E2997FF00389225 /* role */,
 				0B9607F61E297D4100A0F3AF /* lobby */,
 				0B84FBFB1E2961EE0075E8EC /* join */,
@@ -181,6 +195,7 @@
 			children = (
 				0B84FBF91E295FA50075E8EC /* Main.storyboard */,
 				0BB0C2381E29AD0D00389225 /* Launch Screen.storyboard */,
+				4BF65A791E29C71500BF68A4 /* Gameplay.storyboard */,
 			);
 			path = storyboards;
 			sourceTree = "<group>";
@@ -219,6 +234,25 @@
 				8A6556FABE36E112733C161B /* Pods-lycan.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		4B562B021E29AC5700DEE8CE /* game */ = {
+			isa = PBXGroup;
+			children = (
+				4B562B031E29AC8D00DEE8CE /* GameViewController.swift */,
+				4B562B0C1E29BA0800DEE8CE /* BaseGameplayCell.swift */,
+				4B562B081E29B71200DEE8CE /* CardViewCell.swift */,
+				4B562B0A1E29B73300DEE8CE /* PlayerViewCell.swift */,
+			);
+			path = game;
+			sourceTree = "<group>";
+		};
+		4B562B051E29ACB600DEE8CE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4B562B061E29ACF900DEE8CE /* GameplayViewModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		8C02ED781E2978FA007CA0F8 /* Networking */ = {
@@ -371,6 +405,7 @@
 			files = (
 				0BB0C2391E29AD0D00389225 /* Launch Screen.storyboard in Resources */,
 				0B84FBF81E295F640075E8EC /* Assets.xcassets in Resources */,
+				4BF65A7A1E29C71500BF68A4 /* Gameplay.storyboard in Resources */,
 				0B84FBFA1E295FA50075E8EC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,10 +485,15 @@
 				8C571AC21E298546000F2169 /* ConnectedPlayerTableViewCell.swift in Sources */,
 				8CB75A361E298D8D0062D9BE /* RequestModels.swift in Sources */,
 				8C571AC41E298546000F2169 /* LobbyViewModel.swift in Sources */,
+				4B562B091E29B71200DEE8CE /* CardViewCell.swift in Sources */,
 				8C571AC31E298546000F2169 /* LobbyViewController.swift in Sources */,
 				0B84FBF41E295EDE0075E8EC /* AppDelegate.swift in Sources */,
+				4B562B0D1E29BA0800DEE8CE /* BaseGameplayCell.swift in Sources */,
 				8C02ED7A1E297906007CA0F8 /* Networking.swift in Sources */,
+				4B562B041E29AC8D00DEE8CE /* GameViewController.swift in Sources */,
+				4B562B071E29ACF900DEE8CE /* GameplayViewModel.swift in Sources */,
 				0BB0C2371E299C6800389225 /* RoleViewController.swift in Sources */,
+				4B562B0B1E29B73300DEE8CE /* PlayerViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,6 +24,12 @@ class IsReadyResponse {
     var playerType: PlayerType!
 }
 
+class GameStateResponse {
+    var gameState: GameState!
+    var players: [ConnectedPlayer] = []
+    var playerType: PlayerType!
+}
+
 class VoteResponse {
     var werewolvesWon: Bool!
     var everyoneVoted: Bool!
@@ -32,7 +38,21 @@ class VoteResponse {
 
 enum GameState: Int {
     case lobby = 1
-    case ready = 2
+    case playing = 2
+    case vote = 3
+    case gameover = 4
+    
+    func name() -> String {
+        if self == .lobby {
+            return "Waiting..."
+        } else if self == .playing {
+            return "The Game is afoot!"
+        } else if self == .vote {
+            return "Time to vote!"
+        } else {
+            return "Game over!"
+        }
+    }
 }
 
 enum PlayerType: Int {
@@ -42,4 +62,3 @@ enum PlayerType: Int {
     case robber = 4
     case villager = 5
 }
-

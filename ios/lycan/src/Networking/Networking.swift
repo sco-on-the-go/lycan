@@ -203,8 +203,16 @@ extension Networking {
                 
                 if let players = json["Players"] as? [[String: Any]] {
                     for play in players {
-                        let player = ConnectedPlayer(json: play)
-                        player.updateColour()
+                        guard let name = play["Name"] as? String,
+                            let id = play["PlayerId"] as? String,
+                            let isReady = play["IsReady"] as? Bool,
+                            let isNPC = play["IsNPC"] as? Bool,
+                            let type = play["PlayerType"] as? Int,
+                            let playerType = PlayerType(rawValue: type) else {
+                                continue
+                        }
+                        let player = ConnectedPlayer(name: name, id: id, isReady: isReady, isNPC: isNPC, playerType: playerType)
+
                         response.players.append(player)
                     }
                 }
