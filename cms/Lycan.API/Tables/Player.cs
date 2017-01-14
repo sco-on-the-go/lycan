@@ -27,5 +27,6 @@ namespace Lycan.API
         public bool IsReady { get; set; }
         public bool IsNPC { get; set; }
         public PlayerTypeEnum PlayerType { get; set; }
+        public Guid VoteForPlayerId { get; set; }
     }
 }

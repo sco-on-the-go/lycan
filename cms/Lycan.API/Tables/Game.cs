@@ -12,7 +12,8 @@ namespace Lycan.API
     public enum GameStateEnum
     {
         Lobby = 1,
-        Ready,
+        InGame,
+        GameOver
     }
 
     public class Game

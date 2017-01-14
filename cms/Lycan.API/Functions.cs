@@ -133,7 +133,7 @@ namespace Lycan.API
             if (player == null)
                 throw new Exception($"{requestBody.PlayerId} was not found");
 
-            player.IsReady = true;
+            player.IsReady = requestBody.IsReady;
             await DDBContext.SaveAsync(player);
             
             var scanResult = DDBContext.ScanAsync<Player>(new[] { new ScanCondition("GameId", Amazon.DynamoDBv2.DocumentModel.ScanOperator.Equal, player.GameId) });
@@ -145,7 +145,7 @@ namespace Lycan.API
             if (game == null)
                 throw new Exception($"{player.GameId} was not found");
 
-            if (players.All(p => p.IsReady == true))
+            if (players.All(p => p.IsReady == true) && game.State == GameStateEnum.Lobby)
             {
                 List<PlayerTypeEnum> types = new List<API.PlayerTypeEnum>()
                 {
@@ -172,7 +172,7 @@ namespace Lycan.API
                     await DDBContext.SaveAsync(gamePlayer);
                 }
 
-                game.State = GameStateEnum.Ready;
+                game.State = GameStateEnum.InGame;
                 await DDBContext.SaveAsync(game);
             }
 
@@ -181,7 +181,7 @@ namespace Lycan.API
                 StatusCode = (int)HttpStatusCode.OK,
                 Body = JsonConvert.SerializeObject(new IsReadyResponse()
                 {
-                    Players = players.Select(p => new IsReadyResponse.PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady, PlayerType = p.PlayerType, IsNPC = p.IsNPC }).ToList(),
+                    Players = players.Select(p => new PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady, PlayerType = p.PlayerType, IsNPC = p.IsNPC }).ToList(),
                     GameState = game.State,
                     PlayerType = player.PlayerType
                 }),
@@ -191,13 +191,13 @@ namespace Lycan.API
 
         public async Task<APIGatewayProxyResponse> VoteAsync(APIGatewayProxyRequest request, ILambdaContext context)
         {
-            var requestBody = JsonConvert.DeserializeObject<IsReadyRequest>(request?.Body);
+            var requestBody = JsonConvert.DeserializeObject<VoteRequest>(request?.Body);
 
             Player player = await DDBContext.LoadAsync<Player>(requestBody.PlayerId);
             if (player == null)
                 throw new Exception($"{requestBody.PlayerId} was not found");
 
-            player.IsReady = true;
+            player.VoteForPlayerId = requestBody.VoteForPlayerId;
             await DDBContext.SaveAsync(player);
 
             var scanResult = DDBContext.ScanAsync<Player>(new[] { new ScanCondition("GameId", Amazon.DynamoDBv2.DocumentModel.ScanOperator.Equal, player.GameId) });
@@ -209,14 +209,29 @@ namespace Lycan.API
             if (game == null)
                 throw new Exception($"{player.GameId} was not found");
             
+            if (players.All(p => p.VoteForPlayerId != Guid.Empty) && game.State == GameStateEnum.InGame)
+            {
+                // Find the most voted player
+                var q = (from p in players
+                        group p by p.VoteForPlayerId into g
+                        let count = g.Count()
+                        orderby count descending
+                        select new { Value = g.Key, Count = count }).ToList();
+
+                //if (q.Count > 1 && q[0].Count == )
+
+                game.State = GameStateEnum.GameOver;
+                await DDBContext.SaveAsync(game);
+            }
+
             return new APIGatewayProxyResponse
             {
                 StatusCode = (int)HttpStatusCode.OK,
-                Body = JsonConvert.SerializeObject(new IsReadyResponse()
+                Body = JsonConvert.SerializeObject(new VoteResponse()
                 {
-                    Players = players.Select(p => new IsReadyResponse.PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady, PlayerType = p.PlayerType, IsNPC = p.IsNPC }).ToList(),
-                    GameState = game.State,
-                    PlayerType = player.PlayerType
+                    Players = players.Select(p => new PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady, PlayerType = p.PlayerType, IsNPC = p.IsNPC }).ToList(),
+                    EveryoneVoted = game.State == GameStateEnum.GameOver,
+                    WerewolvesWon = false
                 }),
                 Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
             };
@@ -249,6 +264,7 @@ namespace Lycan.API
         public class IsReadyRequest
         {
             public Guid PlayerId { get; set; }
+            public bool IsReady { get; set; }
         }
 
         public class IsReadyResponse
@@ -256,15 +272,30 @@ namespace Lycan.API
             public List<PlayerViewModel> Players { get; set; }
             public GameStateEnum GameState { get; set; }
             public PlayerTypeEnum PlayerType { get; set; }
+        }
 
-            public class PlayerViewModel
-            {
-                public Guid PlayerId { get; set; }
-                public string Name { get; set; }
-                public bool IsReady { get; set; }
-                public bool IsNPC { get; set; }
-                public PlayerTypeEnum PlayerType { get; set; }
-            }
+        public class VoteRequest
+        {
+            public Guid PlayerId { get; set; }
+            public Guid VoteForPlayerId { get; set; }
+        }
+
+        public class VoteResponse
+        {
+            public bool WerewolvesWon { get; set; }
+            public bool EveryoneVoted { get; set; }
+            public List<PlayerViewModel> Players { get; set; }
+        }
+
+
+        public class PlayerViewModel
+        {
+            public Guid PlayerId { get; set; }
+            public string Name { get; set; }
+            public bool IsReady { get; set; }
+            public bool IsNPC { get; set; }
+            public PlayerTypeEnum PlayerType { get; set; }
+            public Guid VoteForPlayerId { get; set; }
         }
 
     }
