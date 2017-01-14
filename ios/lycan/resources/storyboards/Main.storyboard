@@ -50,7 +50,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L22-g6-Iq1">
                                 <rect key="frame" x="0.0" y="211" width="375" height="40"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XFt-eu-wGU">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Game" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XFt-eu-wGU">
                                         <rect key="frame" x="16" y="4" width="343" height="32"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -384,7 +384,7 @@
                                                 <color key="shadowColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <size key="shadowOffset" width="2" height="1"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxT-UC-yZX">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxT-UC-yZX">
                                                 <rect key="frame" x="0.0" y="0.0" width="359" height="607"/>
                                                 <connections>
                                                     <action selector="flipCard" destination="XUb-FZ-Zb9" eventType="touchUpInside" id="6yt-5O-itS"/>
@@ -401,15 +401,16 @@
                                             <constraint firstItem="gd6-5M-jBa" firstAttribute="centerY" secondItem="Mi2-1e-BTv" secondAttribute="centerY" id="mq6-Sc-MDi"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhd-TD-txl">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhd-TD-txl">
                                         <rect key="frame" x="0.0" y="0.0" width="359" height="607"/>
-                                        <state key="normal" backgroundImage="card-back"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="card-back"/>
                                         <connections>
                                             <action selector="flipCard" destination="XUb-FZ-Zb9" eventType="touchUpInside" id="1xM-LI-qIt"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="rhd-TD-txl" firstAttribute="leading" secondItem="1rK-7C-IwP" secondAttribute="leading" id="GwV-PY-vjp"/>
                                     <constraint firstAttribute="bottom" secondItem="Mi2-1e-BTv" secondAttribute="bottom" id="Jyd-9e-Ngi"/>
@@ -461,24 +462,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PhX-zQ-LJr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1145" y="173"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="vGQ-N1-v7R">
-            <objects>
-                <viewController id="4FF-3a-LSU" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="pdN-ob-5Ln"/>
-                        <viewControllerLayoutGuide type="bottom" id="7Jv-hX-Xew"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="A3f-YY-KAB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4Eb-fJ-Sg9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2697" y="443"/>
         </scene>
     </scenes>
     <resources>
