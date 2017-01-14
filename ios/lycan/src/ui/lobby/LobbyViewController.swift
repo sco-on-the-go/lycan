@@ -43,7 +43,6 @@ class LobbyViewController: UIViewController {
     
     func pollIsReady() {
         Networking.isReady(playerId: viewModel.playerId!,isReadied:viewModel.isReady , success: { (response) in
-            
             self.updatePlayersList(playerList: response.players)
 
             if response.gameState == GameState.playing {

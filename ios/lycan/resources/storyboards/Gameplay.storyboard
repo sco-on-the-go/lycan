@@ -12,7 +12,7 @@
         <!--Game View Controller-->
         <scene sceneID="ZCg-7b-Lys">
             <objects>
-                <viewController id="PJI-aJ-jmz" customClass="GameViewController" customModule="lycan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Game" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PJI-aJ-jmz" customClass="GameViewController" customModule="lycan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aid-rN-lC2"/>
                         <viewControllerLayoutGuide type="bottom" id="CN2-lb-rSf"/>

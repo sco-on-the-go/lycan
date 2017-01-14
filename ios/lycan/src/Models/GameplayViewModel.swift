@@ -9,7 +9,7 @@
 import Foundation
 
 protocol GameplayStateChanged : class {
-    func phaseChangedTo(phase:GameState)
+    func phaseChangedTo(phase:GameState, success:Bool?)
     func stateChanged()
 }
 
@@ -25,7 +25,6 @@ enum GameplayActionType {
 class GameplayViewModel {
     static let get = GameplayViewModel()
     
-    var currentPlayerId : String?
     var gameState : GameStateResponse? {
         didSet {
             if let delegate = stateNotifyDelegate {
@@ -41,24 +40,10 @@ class GameplayViewModel {
     
     func refresh() {
         //TODO: Reload data via a network response. Probably needs a game Id and player Id?
-        let fakeState = GameStateResponse()
-        fakeState.gameState = GameState.playing
-        fakeState.players = [
-            ConnectedPlayer(name:"George", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.robber),
-            ConnectedPlayer(name:"Dave", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.seer),
-            ConnectedPlayer(name:"Neil", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.werewolf),
-            ConnectedPlayer(name:"Tristan", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.troublemaker),
-            ConnectedPlayer(name:"Burf", id:UUID().uuidString, isReady:true, isNPC:false, playerType:PlayerType.villager),
-            ConnectedPlayer(name:"Card 1", id:UUID().uuidString, isReady:true, isNPC:true, playerType:PlayerType.villager),
-            ConnectedPlayer(name:"Card 2", id:UUID().uuidString, isReady:true, isNPC:true, playerType:PlayerType.villager),
-            ConnectedPlayer(name:"Card 3", id:UUID().uuidString, isReady:true, isNPC:true, playerType:PlayerType.werewolf),
-        ]
-        if let somePlayer = fakeState.players.first {
-            fakeState.playerType = somePlayer.playerType
-            self.currentPlayerId = somePlayer.id
-        }
-        
-        gameState = fakeState
+        let currentPlayerId = PersistenceHelper.get.playerId
+        Networking.isReady(playerId: currentPlayerId, isReadied:true , success: { (response) in
+            self.gameState = response
+        }, failure: { (error) in })
     }
 }
 
@@ -70,6 +55,23 @@ extension GameplayViewModel : GameplayAction {
     
     func playActionForPlayer(_ player: ConnectedPlayer) {
         //TODO: Determine valid state changes, network calls required, UI changes etc.
+        voteForPlayer(playerId: player.id)
+    }
+    
+    private func voteForPlayer(playerId:String) {
+        let currentPlayerId = PersistenceHelper.get.playerId
+        if let currentPlayer = gameState?.findPlayer(currentPlayerId) {
+            Networking.voteForPlayer(playerId: currentPlayerId, voteForPlayerId: playerId, success: { (result) in
+                if (!result.everyoneVoted) {
+                    self.voteForPlayer(playerId: playerId)
+                } else {
+                    let youWon = result.werewolvesWon == (currentPlayer.playerType == PlayerType.werewolf)
+                    self.stateNotifyDelegate?.phaseChangedTo(phase: GameState.gameover, success: youWon)
+                }
+            }, failure: {(error) in
+                //TODO: Handle errors?
+            })
+        }
     }
 }
 

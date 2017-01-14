@@ -167,8 +167,8 @@ extension Networking {
         }
     }
     
-    static func voteForPlayer(playerId: String, playerToVoteId: String, success: @escaping (_ results: VoteResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
-        let router = LycanRouter.Vote(playerId, playerToVoteId)
+    static func voteForPlayer(playerId: String, voteForPlayerId: String, success: @escaping (_ results: VoteResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
+        let router = LycanRouter.Vote(playerId, voteForPlayerId)
         SessionManager.default.request(router).responseJSON { (data) in
             let response = VoteResponse()
             print(data)
@@ -194,11 +194,11 @@ extension Networking {
         }
     }
     
-    static func isReady(playerId: String,isReadied: Bool, success: @escaping (_ results: IsReadyResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
+    static func isReady(playerId: String,isReadied: Bool, success: @escaping (_ results: GameStateResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
         let router = LycanRouter.IsReady(playerId, isReadied)
         SessionManager.default.request(router).responseJSON { (data) in
             
-            let response = IsReadyResponse()
+            let response = GameStateResponse()
             if let json = data.result.value as? [String: Any] {
                 
                 if let players = json["Players"] as? [[String: Any]] {

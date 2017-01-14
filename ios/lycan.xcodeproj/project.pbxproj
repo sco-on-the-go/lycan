@@ -21,6 +21,7 @@
 		4B562B0B1E29B73300DEE8CE /* PlayerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B562B0A1E29B73300DEE8CE /* PlayerViewCell.swift */; };
 		4B562B0D1E29BA0800DEE8CE /* BaseGameplayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B562B0C1E29BA0800DEE8CE /* BaseGameplayCell.swift */; };
 		4BF65A7A1E29C71500BF68A4 /* Gameplay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF65A791E29C71500BF68A4 /* Gameplay.storyboard */; };
+		4BF65A7C1E29CE7400BF68A4 /* PersistenceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF65A7B1E29CE7400BF68A4 /* PersistenceHelper.swift */; };
 		8C02ED7A1E297906007CA0F8 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C02ED791E297906007CA0F8 /* Networking.swift */; };
 		8C571AC11E298546000F2169 /* ConnectedPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C571ABD1E298546000F2169 /* ConnectedPlayer.swift */; };
 		8C571AC21E298546000F2169 /* ConnectedPlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C571ABE1E298546000F2169 /* ConnectedPlayerTableViewCell.swift */; };
@@ -71,6 +72,7 @@
 		4B562B0A1E29B73300DEE8CE /* PlayerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewCell.swift; sourceTree = "<group>"; };
 		4B562B0C1E29BA0800DEE8CE /* BaseGameplayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseGameplayCell.swift; sourceTree = "<group>"; };
 		4BF65A791E29C71500BF68A4 /* Gameplay.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Gameplay.storyboard; sourceTree = "<group>"; };
+		4BF65A7B1E29CE7400BF68A4 /* PersistenceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceHelper.swift; sourceTree = "<group>"; };
 		7A842579F0FE00C7260B700C /* Pods_lycan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lycan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A6556FABE36E112733C161B /* Pods-lycan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lycan.release.xcconfig"; path = "Pods/Target Support Files/Pods-lycan/Pods-lycan.release.xcconfig"; sourceTree = "<group>"; };
 		8C02ED791E297906007CA0F8 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				4B562B061E29ACF900DEE8CE /* GameplayViewModel.swift */,
+				4BF65A7B1E29CE7400BF68A4 /* PersistenceHelper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 				8CB75A361E298D8D0062D9BE /* RequestModels.swift in Sources */,
 				8C571AC41E298546000F2169 /* LobbyViewModel.swift in Sources */,
 				4B562B091E29B71200DEE8CE /* CardViewCell.swift in Sources */,
+				4BF65A7C1E29CE7400BF68A4 /* PersistenceHelper.swift in Sources */,
 				8C571AC31E298546000F2169 /* LobbyViewController.swift in Sources */,
 				0B84FBF41E295EDE0075E8EC /* AppDelegate.swift in Sources */,
 				4B562B0D1E29BA0800DEE8CE /* BaseGameplayCell.swift in Sources */,

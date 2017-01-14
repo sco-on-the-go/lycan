@@ -49,7 +49,8 @@ class JoinViewController: UIViewController {
     @IBAction func host() {
         // Call API
         Networking.hostGame(gameName: gameTextField.text!,playerName: nameTextField.text!, success: {(response) in
-            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "LobbyViewController") as? LobbyViewController {
+            PersistenceHelper.get.playerId = response.playerId
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LobbyViewController") as? LobbyViewController {
                 vc.viewModel = LobbyViewModel(delegate: vc,playerId: response.playerId)
                 self.navigationController?.pushViewController(vc, animated: true)
             }

@@ -25,8 +25,12 @@ class GameViewController : UIViewController {
 }
 
 extension GameViewController : GameplayStateChanged {
-    func phaseChangedTo(phase: GameState) {
-        self.gamePhaseLabel.text = phase.name()
+    func phaseChangedTo(phase: GameState, success:Bool? = nil) {
+        if let result = success {
+            self.gamePhaseLabel.text = phase.name() + (result ? " - You won!" : " - You lost")
+        } else {
+            self.gamePhaseLabel.text = phase.name()
+        }
     }
     
     func stateChanged() {

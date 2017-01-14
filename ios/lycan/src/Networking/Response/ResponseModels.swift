@@ -18,16 +18,14 @@ class HostGameResponseModel {
     var gameId: String!
 }
 
-class IsReadyResponse {
-    var gameState: GameState!
-    var players: [ConnectedPlayer]! = []
-    var playerType: PlayerType!
-}
-
 class GameStateResponse {
     var gameState: GameState!
     var players: [ConnectedPlayer] = []
     var playerType: PlayerType!
+    
+    func findPlayer(_ playerId:String) -> ConnectedPlayer? {
+        return players.filter({ $0.id == playerId }).first
+    }
 }
 
 class VoteResponse {
