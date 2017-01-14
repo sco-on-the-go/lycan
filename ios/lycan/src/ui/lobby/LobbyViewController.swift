@@ -70,6 +70,7 @@ extension LobbyViewController: UICollectionViewDataSource {
             let player = playerList[indexPath.row]
             cell.nameLabel.text = player.name
             cell.readyImageView.isHidden = !player.isReady
+            cell.containerView.backgroundColor = player.color.withAlphaComponent(0.6)
             return cell
         } else {
             return UICollectionViewCell()

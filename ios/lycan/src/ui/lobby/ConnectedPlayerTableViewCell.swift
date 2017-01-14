@@ -12,6 +12,7 @@ class ConnectedPlayerTableViewCell: UICollectionViewCell {
     
     static let reuseId = "ConnectedPlayerTableViewCellId"
     
+    @IBOutlet var containerView: UIView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var readyImageView: UIImageView!
 }

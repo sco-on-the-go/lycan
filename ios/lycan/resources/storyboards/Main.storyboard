@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y8P-aR-rpc">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y8P-aR-rpc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -245,6 +245,7 @@
                                             <constraint firstAttribute="trailing" secondItem="G6c-Kk-UWI" secondAttribute="trailing" id="kQR-21-z7o"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="containerView" destination="viR-0A-a23" id="kTR-7p-NDG"/>
                                             <outlet property="nameLabel" destination="A19-Eg-h06" id="8Q1-Ot-xBo"/>
                                             <outlet property="readyImageView" destination="G6c-Kk-UWI" id="xEN-fx-4xg"/>
                                         </connections>
@@ -264,7 +265,7 @@
                                 <size key="shadowOffset" width="2" height="1"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="36J-aV-p5P">
-                                <rect key="frame" x="169" y="275" width="37" height="37"/>
+                                <rect key="frame" x="169" y="275.5" width="37" height="37"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmm-oO-WvY">
                                 <rect key="frame" x="0.0" y="531" width="375" height="64"/>
@@ -351,7 +352,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vRe-qC-9Or">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:32" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8QJ-6K-VXs">
                                         <rect key="frame" x="319" y="11" width="48" height="22"/>
@@ -370,13 +371,13 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1rK-7C-IwP">
-                                <rect key="frame" x="8" y="52" width="359" height="607"/>
+                                <rect key="frame" x="8" y="72" width="359" height="587"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mi2-1e-BTv">
-                                        <rect key="frame" x="0.0" y="0.0" width="359" height="607"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="587"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Role" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gd6-5M-jBa">
-                                                <rect key="frame" x="141.5" y="280.5" width="75.5" height="46.5"/>
+                                                <rect key="frame" x="141.5" y="270.5" width="76" height="47"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="38"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -384,7 +385,7 @@
                                                 <size key="shadowOffset" width="2" height="1"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxT-UC-yZX">
-                                                <rect key="frame" x="0.0" y="0.0" width="359" height="607"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="359" height="587"/>
                                                 <connections>
                                                     <action selector="flipCard" destination="XUb-FZ-Zb9" eventType="touchUpInside" id="6yt-5O-itS"/>
                                                 </connections>
@@ -401,7 +402,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhd-TD-txl">
-                                        <rect key="frame" x="0.0" y="0.0" width="359" height="607"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="587"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="card-back"/>
                                         <connections>
