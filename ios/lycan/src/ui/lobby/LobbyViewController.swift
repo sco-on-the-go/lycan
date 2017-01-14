@@ -10,34 +10,25 @@ import UIKit
 
 class LobbyViewController: UIViewController {
 
+    let toRoleSegue = "toRoleSegue"
+    
     @IBOutlet var readyButton: UIButton!
-    @IBOutlet var startButton: UIButton!
     @IBOutlet var noPlayersLabel: UILabel!
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var collectionView: UICollectionView!
 
     var viewModel: LobbyViewModel!
     var playerList = [ConnectedPlayer]()
-    var readyTimer: Timer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        readyTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { (timer) in
-            self.pollIsReady()
-        })
+        
+        self.pollServer()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        readyTimer.fire()
-    }
-
     @IBAction func ready() {
         viewModel?.toggleReady()
         
-    }
-    
-    @IBAction func start() {
-        viewModel?.startGame()
     }
     
     @IBAction func back() {
@@ -45,17 +36,29 @@ class LobbyViewController: UIViewController {
         viewModel?.exitLobby()
     }
     
+    func pollServer() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.pollIsReady()
+        }
+    }
+    
     func pollIsReady() {
         Networking.isReady(playerId: viewModel.playerId!,isReadied:viewModel.isReady , success: { (response) in
             
+            self.updatePlayersList(playerList: response.players)
+
             if response.gameState == .ready {
-                //TODO: Segue to game play view controller
+                self.performSegue(withIdentifier: self.toRoleSegue, sender: self)
             } else {
-                self.updatePlayersList(playerList: response.players)
+                self.pollServer()
             }
         }, failure: { (error) in
             
         })
+    }
+    
+    func showCoolNumbersAnimation() {
+        // Numbers count down: 3, 2, 1, G0!, but they swish in in a fancy style. Starting of big, they scale down to small before disappearing
     }
 }
 
@@ -93,7 +96,6 @@ extension LobbyViewController: LobbyViewModelDelegate {
         noPlayersLabel.isHidden = playerList.count > 0
         self.playerList = playerList
         collectionView.reloadData()
-        startButton.isEnabled = playerList.filter({ $0.isReady }).count == playerList.count
     }
     
     func updateReadyButton(isReady: Bool) {
