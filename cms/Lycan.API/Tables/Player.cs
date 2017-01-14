@@ -13,8 +13,8 @@ namespace Lycan.API
     {
         Werewolf = 1,
         Seer,
-        Troublemaker,
         Robber,
+        Troublemaker,
         Villager
     }
 
