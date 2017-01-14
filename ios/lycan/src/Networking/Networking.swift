@@ -175,9 +175,9 @@ extension Networking {
             if let json = data.result.value as? [String: Any] {
                 if let players = json["Players"] as? [[String: Any]] {
                     for play in players {
-                        let player = ConnectedPlayer(json: play)
-                        player.updateColour()
-                        response.players.append(player)
+                        if let player = ConnectedPlayer(json: play) {
+                            response.players.append(player)
+                        }
                     }
                 }
                 
