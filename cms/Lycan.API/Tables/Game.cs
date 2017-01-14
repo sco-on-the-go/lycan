@@ -13,6 +13,7 @@ namespace Lycan.API
     {
         Lobby = 1,
         InGame,
+        Vote,
         GameOver
     }
 
@@ -22,5 +23,6 @@ namespace Lycan.API
         public Guid GameId { get; set; }
         public string Name { get; set; }
         public GameStateEnum State { get; set; }
+        public Guid CurrentPlayerId { get; set; }
     }
 }

@@ -136,9 +136,11 @@ namespace Lycan.API
             if (player == null)
                 throw new Exception($"{requestBody.PlayerId} was not found");
 
-            player.IsReady = requestBody.IsReady;
-            await DDBContext.SaveAsync(player);
-            
+            if (player.IsReady != requestBody.IsReady)
+            {
+                player.IsReady = requestBody.IsReady;
+                await DDBContext.SaveAsync(player);
+            }
             var scanResult = DDBContext.ScanAsync<Player>(new[] { new ScanCondition("GameId", Amazon.DynamoDBv2.DocumentModel.ScanOperator.Equal, player.GameId) });
             var players = await scanResult.GetRemainingAsync();
 
@@ -176,6 +178,7 @@ namespace Lycan.API
                 }
 
                 game.State = GameStateEnum.InGame;
+                game.CurrentPlayerId = GetNextPlayer(players, game.CurrentPlayerId);
                 await DDBContext.SaveAsync(game);
             }
 
@@ -186,7 +189,92 @@ namespace Lycan.API
                 {
                     Players = players.Select(p => new PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady, PlayerType = p.PlayerType, IsNPC = p.IsNPC, VoteForPlayerId = p.VoteForPlayerId, ColourBrightness = p.ColourBrightness, ColourHue = p.ColourHue, ColourSaturation = p.ColourSaturation }).ToList(),
                     GameState = game.State,
-                    PlayerType = player.PlayerType
+                    PlayerType = player.PlayerType,
+                    CurrentPlayerId = game.CurrentPlayerId
+                }),
+                Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+            };
+        }
+
+        private Guid GetNextPlayer(List<Player> players, Guid currentPlayerId)
+        {
+            PlayerTypeEnum currentPlayerType = 0;
+            if (currentPlayerId != Guid.Empty)
+                currentPlayerType = players.FirstOrDefault(p => p.PlayerId == currentPlayerId).PlayerType;
+            
+            if (currentPlayerType < PlayerTypeEnum.Seer && players.Any(p => p.PlayerType == PlayerTypeEnum.Seer && !p.IsNPC))
+                return players.First(p => p.PlayerType == PlayerTypeEnum.Seer).PlayerId;
+            else if (currentPlayerType < PlayerTypeEnum.Robber && players.Any(p => p.PlayerType == PlayerTypeEnum.Robber && !p.IsNPC))
+                return players.First(p => p.PlayerType == PlayerTypeEnum.Robber).PlayerId;
+            else if (currentPlayerType < PlayerTypeEnum.Troublemaker && players.Any(p => p.PlayerType == PlayerTypeEnum.Troublemaker && !p.IsNPC))
+                return players.First(p => p.PlayerType == PlayerTypeEnum.Troublemaker).PlayerId;
+            else
+                return Guid.Empty;
+        }
+
+        public async Task<APIGatewayProxyResponse> PlayerTurnAsync(APIGatewayProxyRequest request, ILambdaContext context)
+        {
+            var requestBody = JsonConvert.DeserializeObject<PlayerTurnRequest>(request?.Body);
+
+            Player player = await DDBContext.LoadAsync<Player>(requestBody.PlayerId);
+            if (player == null)
+                throw new Exception($"{requestBody.PlayerId} was not found");
+            
+            var scanResult = DDBContext.ScanAsync<Player>(new[] { new ScanCondition("GameId", Amazon.DynamoDBv2.DocumentModel.ScanOperator.Equal, player.GameId) });
+            var players = await scanResult.GetRemainingAsync();
+
+            Game game = await DDBContext.LoadAsync<Game>(player.GameId);
+            if (game == null)
+                throw new Exception($"{player.GameId} was not found");
+
+            if (game.CurrentPlayerId == requestBody.PlayerId)
+            {
+                game.CurrentPlayerId = GetNextPlayer(players, game.CurrentPlayerId);
+
+                if (game.CurrentPlayerId == Guid.Empty)
+                    game.State = GameStateEnum.Vote;
+
+                await DDBContext.SaveAsync(game);
+
+                if (requestBody.RobbedPlayerId != Guid.Empty)
+                {
+                    var robbedPlayer = players.FirstOrDefault(p => p.PlayerId == requestBody.RobbedPlayerId);
+
+                    if (robbedPlayer != null)
+                    {
+                        PlayerTypeEnum oldRobbedPlayerType = robbedPlayer.PlayerType;
+                        robbedPlayer.PlayerType = player.PlayerType;
+                        player.PlayerType = oldRobbedPlayerType;
+                        await DDBContext.SaveAsync(robbedPlayer);
+                        await DDBContext.SaveAsync(player);
+                    }
+                }
+
+                if (requestBody.TroubledPlayerId1 != Guid.Empty && requestBody.TroubledPlayerId1 != Guid.Empty)
+                {
+                    var troublePlayer1 = players.FirstOrDefault(p => p.PlayerId == requestBody.TroubledPlayerId1);
+                    var troublePlayer2 = players.FirstOrDefault(p => p.PlayerId == requestBody.TroubledPlayerId2);
+
+                    if (troublePlayer1 != null && troublePlayer2 != null)
+                    {
+                        PlayerTypeEnum oldPlayer1Type = troublePlayer1.PlayerType;
+                        troublePlayer1.PlayerType = troublePlayer2.PlayerType;
+                        troublePlayer2.PlayerType = oldPlayer1Type;
+                        await DDBContext.SaveAsync(troublePlayer1);
+                        await DDBContext.SaveAsync(troublePlayer2);
+                    }
+                }
+            }
+
+            return new APIGatewayProxyResponse
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = JsonConvert.SerializeObject(new IsReadyResponse()
+                {
+                    Players = players.Select(p => new PlayerViewModel { PlayerId = p.PlayerId, Name = p.Name, IsReady = p.IsReady, PlayerType = p.PlayerType, IsNPC = p.IsNPC, VoteForPlayerId = p.VoteForPlayerId, ColourBrightness = p.ColourBrightness, ColourHue = p.ColourHue, ColourSaturation = p.ColourSaturation }).ToList(),
+                    GameState = game.State,
+                    PlayerType = player.PlayerType,
+                    CurrentPlayerId = game.CurrentPlayerId
                 }),
                 Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
             };
@@ -206,13 +294,13 @@ namespace Lycan.API
             var scanResult = DDBContext.ScanAsync<Player>(new[] { new ScanCondition("GameId", Amazon.DynamoDBv2.DocumentModel.ScanOperator.Equal, player.GameId) });
             var players = await scanResult.GetRemainingAsync();
 
-            context.Logger.LogLine($"{players.Count(p => p.IsReady)} Ready : {players.Count(p => !p.IsReady)} Not Ready");
-
             Game game = await DDBContext.LoadAsync<Game>(player.GameId);
             if (game == null)
                 throw new Exception($"{player.GameId} was not found");
 
             bool werewolvesWon = false;
+
+            context.Logger.LogLine($"{players.Count(p => p.IsReady)} Ready : {players.Count(p => !p.IsReady)} Not Ready - Game State {game.State}");
 
             if (players.All(p => p.VoteForPlayerId != Guid.Empty) && game.State == GameStateEnum.InGame)
             {
@@ -282,6 +370,24 @@ namespace Lycan.API
             public List<PlayerViewModel> Players { get; set; }
             public GameStateEnum GameState { get; set; }
             public PlayerTypeEnum PlayerType { get; set; }
+            public Guid CurrentPlayerId { get; set; }
+        }
+
+        public class PlayerTurnRequest
+        {
+            public Guid PlayerId { get; set; }
+            public Guid SeenPlayerId { get; set; }
+            public Guid RobbedPlayerId { get; set; }
+            public Guid TroubledPlayerId1 { get; set; }
+            public Guid TroubledPlayerId2 { get; set; }
+        }
+
+        public class PlayerTurnResponse
+        {
+            public List<PlayerViewModel> Players { get; set; }
+            public GameStateEnum GameState { get; set; }
+            public PlayerTypeEnum PlayerType { get; set; }
+            public Guid CurrentPlayerId { get; set; }
         }
 
         public class VoteRequest
