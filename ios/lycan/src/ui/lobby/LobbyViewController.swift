@@ -23,6 +23,11 @@ class LobbyViewController: UIViewController {
 
     @IBAction func ready() {
         viewModel?.toggleReady()
+        Networking.isReady(playerId: "6e29b74a-efe2-4cfe-b9ac-2f655c1f8253", success: { (response) in
+            print(response)
+        }, failure: { (error) in
+            
+        })
     }
 }
 

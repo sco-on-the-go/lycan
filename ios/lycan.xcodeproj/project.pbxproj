@@ -19,7 +19,8 @@
 		8C571AC21E298546000F2169 /* ConnectedPlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C571ABE1E298546000F2169 /* ConnectedPlayerTableViewCell.swift */; };
 		8C571AC31E298546000F2169 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C571ABF1E298546000F2169 /* LobbyViewController.swift */; };
 		8C571AC41E298546000F2169 /* LobbyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C571AC01E298546000F2169 /* LobbyViewModel.swift */; };
-		8C571AC61E298612000F2169 /* JoinGameResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C571AC51E298612000F2169 /* JoinGameResponse.swift */; };
+		8C571AC61E298612000F2169 /* ResponseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C571AC51E298612000F2169 /* ResponseModels.swift */; };
+		8CB75A361E298D8D0062D9BE /* RequestModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB75A351E298D8D0062D9BE /* RequestModels.swift */; };
 		994A884E7C9A31BBC72AEB77 /* Pods_lycan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A842579F0FE00C7260B700C /* Pods_lycan.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,7 +64,8 @@
 		8C571ABE1E298546000F2169 /* ConnectedPlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedPlayerTableViewCell.swift; sourceTree = "<group>"; };
 		8C571ABF1E298546000F2169 /* LobbyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
 		8C571AC01E298546000F2169 /* LobbyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LobbyViewModel.swift; sourceTree = "<group>"; };
-		8C571AC51E298612000F2169 /* JoinGameResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinGameResponse.swift; sourceTree = "<group>"; };
+		8C571AC51E298612000F2169 /* ResponseModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseModels.swift; sourceTree = "<group>"; };
+		8CB75A351E298D8D0062D9BE /* RequestModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestModels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,7 +223,7 @@
 		8C544C501E29810500563A9B /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				8C571AC51E298612000F2169 /* JoinGameResponse.swift */,
+				8C571AC51E298612000F2169 /* ResponseModels.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -229,6 +231,7 @@
 		8C544C511E29810500563A9B /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				8CB75A351E298D8D0062D9BE /* RequestModels.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -432,8 +435,9 @@
 			files = (
 				8C571AC11E298546000F2169 /* ConnectedPlayer.swift in Sources */,
 				0B84FBFD1E29620C0075E8EC /* JoinViewController.swift in Sources */,
-				8C571AC61E298612000F2169 /* JoinGameResponse.swift in Sources */,
+				8C571AC61E298612000F2169 /* ResponseModels.swift in Sources */,
 				8C571AC21E298546000F2169 /* ConnectedPlayerTableViewCell.swift in Sources */,
+				8CB75A361E298D8D0062D9BE /* RequestModels.swift in Sources */,
 				8C571AC41E298546000F2169 /* LobbyViewModel.swift in Sources */,
 				8C571AC31E298546000F2169 /* LobbyViewController.swift in Sources */,
 				0B84FBF41E295EDE0075E8EC /* AppDelegate.swift in Sources */,
