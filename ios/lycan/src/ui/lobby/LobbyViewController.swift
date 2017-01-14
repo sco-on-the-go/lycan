@@ -28,7 +28,6 @@ class LobbyViewController: UIViewController {
     
     @IBAction func ready() {
         viewModel?.toggleReady()
-        
     }
     
     @IBAction func back() {
@@ -48,7 +47,9 @@ class LobbyViewController: UIViewController {
             self.updatePlayersList(playerList: response.players)
 
             if response.gameState == .ready {
-                self.performSegue(withIdentifier: self.toRoleSegue, sender: self)
+                self.showCoolNumbersAnimation(completion: {
+                    self.performSegue(withIdentifier: self.toRoleSegue, sender: self)
+                })
             } else {
                 self.pollServer()
             }
@@ -57,8 +58,49 @@ class LobbyViewController: UIViewController {
         })
     }
     
-    func showCoolNumbersAnimation() {
+    func showCoolNumbersAnimation(completion: @escaping () -> ()) {
         // Numbers count down: 3, 2, 1, G0!, but they swish in in a fancy style. Starting of big, they scale down to small before disappearing
+        zoomInLabel(text: "3", completion: {
+            self.zoomInLabel(text: "2", completion: {
+                self.zoomInLabel(text: "1", completion: {
+                    self.zoomInLabel(text: "GO!", completion: {
+                        completion()
+                    })
+                })
+            })
+        })
+    }
+    
+    func zoomInLabel(text: String, completion: @escaping () -> ()) {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 48.0)
+        label.text = text
+        label.textColor = UIColor.darkText
+        label.shadowColor = UIColor.red
+        label.shadowOffset = CGSize(width: 2, height: 1)
+        label.center = self.view.center
+        self.view.addSubview(label)
+        let centerXConstraint = NSLayoutConstraint(item: label, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+        self.view.addConstraint(centerXConstraint)
+        let centerYConstraint = NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+        self.view.addConstraint(centerYConstraint)
+        let widthConstraint = NSLayoutConstraint(item: label, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 100.0)
+        label.addConstraint(widthConstraint)
+        let heightConstraint = NSLayoutConstraint(item: label, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 100.0)
+        label.addConstraint(heightConstraint)
+        self.view.layoutIfNeeded()
+
+        label.transform = CGAffineTransform(scaleX: 50, y: 50)
+        UIView.animate(withDuration: 0.5, animations: {
+            label.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }, completion: { (finished) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                label.removeFromSuperview()
+                completion()
+            }
+        })
     }
 }
 
