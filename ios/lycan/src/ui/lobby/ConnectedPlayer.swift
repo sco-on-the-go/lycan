@@ -9,12 +9,15 @@
 import UIKit
 
 class ConnectedPlayer {
-    private(set) var name: String
     private(set) var color: UIColor
-    var isReady: Bool = false
-
-    init(name: String, color: UIColor) {
-        self.name = name
+    
+    var name: String!
+    var id: String!
+    var isReady: Bool!
+    var isNPC: Bool!
+    var playerType: PlayerType!
+    
+    init(color: UIColor) {
         self.color = color
     }
 }

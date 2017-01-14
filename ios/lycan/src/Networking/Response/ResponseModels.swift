@@ -8,6 +8,7 @@
 import Foundation
 
 
+
 class JoinGameResponse {
     var gameId: String!
     var playerId: String!
@@ -19,7 +20,7 @@ class HostGameResponseModel {
 
 class IsReadyResponse {
     var gameState: GameState!
-    var players: [Player]! = []
+    var players: [ConnectedPlayer]! = []
     var playerType: PlayerType!
 }
 
@@ -36,10 +37,3 @@ enum PlayerType: Int {
     case villager = 5
 }
 
-class Player {
-    var name: String!
-    var id: String!
-    var isReady: Bool!
-    var isNPC: Bool!
-    var playerType: PlayerType!
-}

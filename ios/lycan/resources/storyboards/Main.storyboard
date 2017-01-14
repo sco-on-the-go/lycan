@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y8P-aR-rpc">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y8P-aR-rpc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -82,7 +82,6 @@
                                 </state>
                                 <connections>
                                     <action selector="join" destination="pYT-st-hgk" eventType="touchUpInside" id="8jt-cK-qdY"/>
-                                    <segue destination="TCr-ag-d3h" kind="show" id="gth-7F-rXM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uoL-aL-QBv">
@@ -161,12 +160,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sGK-Fx-w1n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-172" y="173.16341829085459"/>
+            <point key="canvasLocation" x="-231" y="179"/>
         </scene>
         <!--Lobby View Controller-->
         <scene sceneID="lDH-qc-rLO">
             <objects>
-                <viewController id="TCr-ag-d3h" customClass="LobbyViewController" customModule="lycan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LobbyViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TCr-ag-d3h" customClass="LobbyViewController" customModule="lycan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4La-hz-a8r"/>
                         <viewControllerLayoutGuide type="bottom" id="x3x-Bm-Gv7"/>
@@ -180,7 +179,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kwj-dK-M0M">
-                                <rect key="frame" x="8" y="8" width="32" height="32"/>
+                                <rect key="frame" x="8" y="28" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="ST1-en-4j0"/>
                                     <constraint firstAttribute="width" constant="32" id="gH7-W4-G4K"/>
@@ -191,7 +190,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FxN-CC-Q17">
-                                <rect key="frame" x="0.0" y="44" width="375" height="479"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="459"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Knx-Wb-UAe">
                                     <size key="itemSize" width="148" height="163"/>
@@ -257,7 +256,7 @@
                                 </connections>
                             </collectionView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No players in the lobby" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kb-ZY-FaV">
-                                <rect key="frame" x="8" y="272.5" width="359" height="22"/>
+                                <rect key="frame" x="8" y="282.5" width="359" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -265,7 +264,7 @@
                                 <size key="shadowOffset" width="2" height="1"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="36J-aV-p5P">
-                                <rect key="frame" x="169" y="265" width="37" height="37"/>
+                                <rect key="frame" x="169" y="275" width="37" height="37"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmm-oO-WvY">
                                 <rect key="frame" x="0.0" y="531" width="375" height="64"/>

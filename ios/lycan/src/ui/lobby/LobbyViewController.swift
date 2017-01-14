@@ -15,22 +15,24 @@ class LobbyViewController: UIViewController {
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var collectionView: UICollectionView!
 
-    var viewModel: LobbyViewModel?
+    var viewModel: LobbyViewModel!
     var playerList = [ConnectedPlayer]()
+    var readyTimer: Timer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        viewModel = LobbyViewModel(delegate: self)
+        readyTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { (timer) in
+            self.pollIsReady()
+        })
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        readyTimer.fire()
     }
 
     @IBAction func ready() {
         viewModel?.toggleReady()
-        Networking.isReady(playerId: "6e29b74a-efe2-4cfe-b9ac-2f655c1f8253", success: { (response) in
-            print(response)
-        }, failure: { (error) in
-            
-        })
+        
     }
     
     @IBAction func start() {
@@ -40,6 +42,19 @@ class LobbyViewController: UIViewController {
     @IBAction func back() {
         _ = self.navigationController?.popViewController(animated: true)
         viewModel?.exitLobby()
+    }
+    
+    func pollIsReady() {
+        Networking.isReady(playerId: viewModel.playerId!,isReadied:viewModel.isReady , success: { (response) in
+            
+            if response.gameState == .ready {
+                //TODO: Segue to game play view controller
+            } else {
+                self.updatePlayersList(playerList: response.players)
+            }
+        }, failure: { (error) in
+            
+        })
     }
 }
 
@@ -64,7 +79,7 @@ extension LobbyViewController: UICollectionViewDataSource {
 extension LobbyViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.size.width - 20) / 3 // hack
+        let width = (collectionView.frame.size.width - 20) / 3 // hack - FLAVOUR
         return CGSize(width: width, height: width)
     }
 }
@@ -79,12 +94,14 @@ extension LobbyViewController: LobbyViewModelDelegate {
     }
     
     func updateReadyButton(isReady: Bool) {
-        if isReady {
-            readyButton.setBackgroundImage(#imageLiteral(resourceName: "background-green"), for: .normal)
-            readyButton.setTitle("Unready", for: .normal)
-        } else {
-            readyButton.setBackgroundImage(#imageLiteral(resourceName: "background-grey"), for: .normal)
-            readyButton.setTitle("Ready", for: .normal)
+        if isViewLoaded {
+            if isReady {
+                readyButton.setBackgroundImage(#imageLiteral(resourceName: "background-green"), for: .normal)
+                readyButton.setTitle("Unready", for: .normal)
+            } else {
+                readyButton.setBackgroundImage(#imageLiteral(resourceName: "background-grey"), for: .normal)
+                readyButton.setTitle("Ready", for: .normal)
+            }
         }
     }
 }
