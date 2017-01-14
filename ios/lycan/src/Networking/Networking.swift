@@ -36,24 +36,40 @@ enum LycanRouter: URLRequestConvertible {
     //static let baseURLString = Settings.getBaseURL()
     static var oAuthToken: String?
     
-    case JoinGame(String)
+    case JoinGame(String,String)
     case IsReady(String)
+    case HostGame(String, String)
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .JoinGame(let name):
+        case .JoinGame(_):
             return .post
+        case .HostGame(_):
+            return .post
+        case .IsReady(_):
+            return .post
+        }
+    }
+    
+    var parameters: [String: Any] {
+        switch self {
+        case .JoinGame(let name, let gameName):
+            return ["PlayerName":name,"GameName":gameName]
+        case .HostGame(let gameHost, let playerName):
+            return ["GameName":gameHost,"PlayerName":playerName]
         case .IsReady(let playerId):
-            return .post
+            return ["PlayerId":playerId]
         }
     }
     
     var path: String {
         switch self {
         case .JoinGame(let name):
-            return "/JoinGame?name=\(name)"
+            return "/JoinGame"
         case .IsReady(let playerId):
-            return "/IsReady?playerId=\(playerId)"
+            return "/IsReady"
+        case .HostGame(let name):
+            return "/HostGame"
         }
     }
     
@@ -62,13 +78,13 @@ enum LycanRouter: URLRequestConvertible {
         var urlRequest = URLRequest(url: url.appendingPathComponent(path))
         urlRequest.httpMethod = method.rawValue
         
-
         
         if self.method == .get {
             urlRequest.httpBody = nil
+        } else {
+            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: self.parameters, options: .prettyPrinted)
         }
         
-
         return urlRequest
         
     }
@@ -107,25 +123,84 @@ class Networking {
 }
 
 extension Networking {
+    static func hostGame(gameName: String, playerName: String,success: @escaping (_ results: JoinGameResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
+        let router = LycanRouter.HostGame(gameName,playerName)
+        SessionManager.default.request(router).responseJSON { (data) in
+            var response = JoinGameResponse()
+            if let json = data.result.value as? [String: Any] {
+                if let playerId = json["PlayerId"] as? String {
+                    response.playerId = playerId
+                }
+                if let gameId = json["GameId"] as? String {
+                    response.gameId = gameId
+                }
+
+                print(data)
+                success(response)
+            }
+        }
+    }
     
-    static func joinGame(name: String, success: @escaping (_ results: JoinGameResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
-        let router = LycanRouter.JoinGame(name)
+    static func joinGame(playerName: String,gameName:String, success: @escaping (_ results: JoinGameResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
+        let router = LycanRouter.JoinGame(playerName, gameName)
+        print(router.urlRequest)
+        SessionManager.default.request(router).responseJSON { (data) in
+            var response = JoinGameResponse()
+            if let json = data.result.value as? [String: Any] {
+                if let playerId = json["PlayerId"] as? String {
+                    response.playerId = playerId
+                }
+                if let gameId = json["GameId"] as? String {
+                    response.gameId = gameId
+                }
         
+                print(data)
+                success(response)
+            }
+        }
+    }
+    
+    
+    static func isReady(playerId: String, success: @escaping (_ results: IsReadyResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
+        let router = LycanRouter.IsReady(playerId)
+        print(router.urlRequest)
         SessionManager.default.request(router).responseJSON { (data) in
             print(data)
+            let response = IsReadyResponse()
+            if let json = data.result.value as? [String: Any] {
+                
+                if let players = json["Players"] as? [[String: Any]] {
+                    for play in players {
+                        let player = Player()
+                        if let playerId = play["PlayerId"] as? String {
+                            player.id = playerId
+                        }
+                        if let name = play["Name"] as? String {
+                            player.name = name
+                        }
+                        if let ready = play["IsReady"] as? Bool {
+                            player.isReady = ready
+                        }
+                        if let npc = play["IsNPC"] as? Bool {
+                            player.isNPC = npc
+                        }
+                        if let type = play["PlayerType"] as? Int {
+                            player.playerType = PlayerType(rawValue: type)
+                        }
+                        response.players.append(player)
+                    }
+                }
+                if let state = json["GameState"] as? Int {
+                    response.gameState = GameState(rawValue: state)
+                }
+                if let type = json["PlayerType"] as? Int {
+                    response.playerType = PlayerType(rawValue: type)
+                }
+                
+                print(data)
+                success(response)
+            }
+
         }
-        
-//        SessionManager.default.request(router).responseObject { (response: DataResponse<JoinGameResponse>) in
-//            if !response.result.isSuccess {
-//                print(response.request!)
-//                failure(nil)
-//            }
-//            
-//            if let responseData = response.result.value {
-//                success(responseData)
-//            } else {
-//                failure(nil)
-//            }
-//        }
     }
 }

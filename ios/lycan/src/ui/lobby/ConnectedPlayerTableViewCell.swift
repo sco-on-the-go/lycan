@@ -10,5 +10,8 @@ import UIKit
 
 class ConnectedPlayerTableViewCell: UICollectionViewCell {
     
+    static let reuseId = "ConnectedPlayerTableViewCellId"
+    
+    @IBOutlet var nameLabel: UILabel!
     @IBOutlet var readyImageView: UIImageView!
 }

@@ -48,9 +48,24 @@ class JoinViewController: UIViewController {
     
     @IBAction func host() {
         // Call API
+        Networking.hostGame(gameName: gameTextField.text!,playerName: nameTextField.text!, success: {(response) in
+            
+        }, failure: {(error) in
+            
+        })
     }
 
     @IBAction func join() {
         // Call API
+        Networking.joinGame(playerName: nameTextField.text!, gameName: gameTextField.text!, success: { (response) in
+            Networking.isReady(playerId: response.playerId, success: { (response) in
+                print(response)
+            }, failure: { (error) in
+                
+            })
+
+        }, failure:{ (error) in
+            
+        })
     }
 }

@@ -11,7 +11,11 @@ import UIKit
 class LobbyViewController: UIViewController {
 
     @IBOutlet var readyButton: UIButton!
-    
+    @IBOutlet var startButton: UIButton!
+    @IBOutlet var noPlayersLabel: UILabel!
+    @IBOutlet var spinner: UIActivityIndicatorView!
+    @IBOutlet var collectionView: UICollectionView!
+
     var viewModel: LobbyViewModel?
     var playerList = [ConnectedPlayer]()
     
@@ -23,6 +27,20 @@ class LobbyViewController: UIViewController {
 
     @IBAction func ready() {
         viewModel?.toggleReady()
+        Networking.isReady(playerId: "6e29b74a-efe2-4cfe-b9ac-2f655c1f8253", success: { (response) in
+            print(response)
+        }, failure: { (error) in
+            
+        })
+    }
+    
+    @IBAction func start() {
+        viewModel?.startGame()
+    }
+    
+    @IBAction func back() {
+        _ = self.navigationController?.popViewController(animated: true)
+        viewModel?.exitLobby()
     }
 }
 
@@ -33,14 +51,33 @@ extension LobbyViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ConnectedPlayerTableViewCell.reuseId, for: indexPath) as? ConnectedPlayerTableViewCell {
+            let player = playerList[indexPath.row]
+            cell.nameLabel.text = player.name
+            cell.readyImageView.isHidden = !player.isReady
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
+    }
+}
+
+extension LobbyViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.frame.size.width / 3 // hack
+        return CGSize(width: width, height: width)
     }
 }
 
 extension LobbyViewController: LobbyViewModelDelegate {
     
     func updatePlayersList(playerList: [ConnectedPlayer]) {
-        
+        spinner.stopAnimating()
+        noPlayersLabel.isHidden = playerList.count > 0
+        self.playerList = playerList
+        collectionView.reloadData()
+        startButton.isEnabled = playerList.filter({ $0.isReady }).count == playerList.count
     }
     
     func updateReadyButton(isReady: Bool) {
