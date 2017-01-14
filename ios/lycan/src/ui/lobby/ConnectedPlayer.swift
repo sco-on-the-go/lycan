@@ -9,7 +9,7 @@
 import UIKit
 
 class ConnectedPlayer {
-    private(set) var color: UIColor
+    private(set) var color: UIColor!
     
     var name: String!
     var id: String!
@@ -17,7 +17,15 @@ class ConnectedPlayer {
     var isNPC: Bool!
     var playerType: PlayerType!
     
-    init(color: UIColor) {
-        self.color = color
+    var colourHue: CGFloat!
+    var colourSaturation: CGFloat!
+    var colourBrightness: CGFloat!
+    
+    init() {
     }
+    
+    func uodateColour() {
+        color = UIColor(hue: self.colourHue, saturation: self.colourSaturation, brightness: self.colourBrightness, alpha: 1.0)
+    }
+    
 }

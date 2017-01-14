@@ -170,7 +170,7 @@ extension Networking {
                 
                 if let players = json["Players"] as? [[String: Any]] {
                     for play in players {
-                        let player = ConnectedPlayer(color: Networking.generateRandomColor())
+                        let player = ConnectedPlayer()
                         if let playerId = play["PlayerId"] as? String {
                             player.id = playerId
                         }
@@ -186,6 +186,17 @@ extension Networking {
                         if let type = play["PlayerType"] as? Int {
                             player.playerType = PlayerType(rawValue: type)
                         }
+                        if let colourSat = play["ColourSaturation"] as? Double {
+                            player.colourSaturation = CGFloat(colourSat)
+                        }
+                        if let colourHue = play["ColourHue"] as? Double {
+                            player.colourHue = CGFloat(colourHue)
+                        }
+                        if let colourBright = play["ColourBrightness"] as? Double {
+                            player.colourBrightness = CGFloat(colourBright)
+                        }
+                        player.uodateColour()
+                        
                         response.players.append(player)
                     }
                 }
@@ -201,14 +212,5 @@ extension Networking {
             }
 
         }
-    }
-    
-    //TODO: MOVE THIS ELSEWHERE
-    static func generateRandomColor() -> UIColor {
-        let hue : CGFloat = CGFloat(arc4random() % 256) / 256 // use 256 to get full range from 0.0 to 1.0
-        let saturation : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from white
-        let brightness : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from black
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
     }
 }
