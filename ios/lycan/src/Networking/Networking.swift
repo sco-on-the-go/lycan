@@ -39,6 +39,7 @@ enum LycanRouter: URLRequestConvertible {
     case JoinGame(String,String)
     case IsReady(String, Bool)
     case HostGame(String, String)
+    case Vote(String, String)
     
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -47,6 +48,8 @@ enum LycanRouter: URLRequestConvertible {
         case .HostGame(_):
             return .post
         case .IsReady(_):
+            return .post
+        case .Vote(_):
             return .post
         }
     }
@@ -59,17 +62,21 @@ enum LycanRouter: URLRequestConvertible {
             return ["GameName":gameHost,"PlayerName":playerName]
         case .IsReady(let playerId, let isReadied):
             return ["PlayerId":playerId,"IsReady": isReadied]
+        case .Vote(let playerId, let playerVotedId):
+            return ["PlayerId": playerId, "VoteForPlayerId": playerVotedId]
         }
     }
     
     var path: String {
         switch self {
-        case .JoinGame(let name):
+        case .JoinGame(_):
             return "/JoinGame"
-        case .IsReady(let playerId):
+        case .IsReady(_):
             return "/IsReady"
-        case .HostGame(let name):
+        case .HostGame(_):
             return "/HostGame"
+        case .Vote(_):
+            return "/Vote"
         }
     }
     
@@ -160,6 +167,32 @@ extension Networking {
         }
     }
     
+    static func voteForPlayer(playerId: String, playerToVoteId: String, success: @escaping (_ results: VoteResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
+        let router = LycanRouter.Vote(playerId, playerToVoteId)
+        SessionManager.default.request(router).responseJSON { (data) in
+            let response = VoteResponse()
+            print(data)
+            if let json = data.result.value as? [String: Any] {
+                if let players = json["Players"] as? [[String: Any]] {
+                    for play in players {
+                        let player = ConnectedPlayer(json: play)
+                        player.updateColour()
+                        response.players.append(player)
+                    }
+                }
+                
+                if let everyoneVoted = json["EveryoneVoted"] as? Bool {
+                    response.everyoneVoted = everyoneVoted
+                }
+                
+                if let werewolvesWon = json["WerewolvesWon"] as? Bool {
+                    response.werewolvesWon = werewolvesWon
+                }
+                success(response)
+            }
+            
+        }
+    }
     
     static func isReady(playerId: String,isReadied: Bool, success: @escaping (_ results: IsReadyResponse) -> Void, failure: @escaping (_ error:Error?) -> Void) -> Void {
         let router = LycanRouter.IsReady(playerId, isReadied)

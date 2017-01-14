@@ -30,6 +30,12 @@ class GameStateResponse {
     var playerType: PlayerType!
 }
 
+class VoteResponse {
+    var werewolvesWon: Bool!
+    var everyoneVoted: Bool!
+    var players: [ConnectedPlayer]! = []
+}
+
 enum GameState: Int {
     case lobby = 1
     case playing = 2
