@@ -1,0 +1,95 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Transform" : "AWS::Serverless-2016-10-31",
+  "Description" : "Lycan Api",
+
+  "Parameters" : {
+  },
+
+  "Conditions" : {
+  },
+
+  "Resources" : {
+
+    "FunctionOnConnectAsync" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "Lycan.Api::Lycan.Api.Functions::OnConnectAsync",
+        "Runtime": "dotnetcore2.1",
+        "CodeUri": "",
+        "Description": "Function that gets called on new connections",
+        "MemorySize": 128,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [ "AWSLambdaFullAccess" ],
+        "Environment" : {
+          "Variables" : {
+            "GameTable" : {"Ref":"DynamoDBTableGame"},
+            "PlayerTable" : {"Ref":"DynamoDBTablePlayer"}
+          }
+        }
+      }
+    },
+
+    "FunctionOnDisconnectAsync" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "Lycan.Api::Lycan.Api.Functions::OnDisconnectAsync",
+        "Runtime": "dotnetcore2.1",
+        "CodeUri": "",
+        "Description": "Function that get called on disconnects",
+        "MemorySize": 128,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [ "AWSLambdaFullAccess" ],
+        "Environment" : {
+          "Variables" : {
+            "GameTable" : {"Ref":"DynamoDBTableGame"},
+            "PlayerTable" : {"Ref":"DynamoDBTablePlayer"}
+          }
+        }
+      }
+    },
+    
+    "FunctionSendMessageAsync" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "Lycan.Api::Lycan.Api.Functions::SendMessageAsync",
+        "Runtime": "dotnetcore2.1",
+        "CodeUri": "",
+        "Description": "Function that echos a message",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [ "AWSLambdaFullAccess" ],
+        "Environment" : {
+          "Variables" : {
+            "GameTable" : {"Ref":"DynamoDBTableGame"},
+            "PlayerTable" : {"Ref":"DynamoDBTablePlayer"}
+          }
+        }
+      }
+    },
+
+    "DynamoDBTableGame" : {
+        "Type" : "AWS::DynamoDB::Table",
+        "Properties" : {
+            "TableName" : "Game",
+            "AttributeDefinitions" : [
+              {"AttributeName" : "GameId", "AttributeType" : "S"}
+            ],
+            "BillingMode" : "PAY_PER_REQUEST"
+        }
+    },
+    "DynamoDBTablePlayer" : {
+        "Type" : "AWS::DynamoDB::Table",
+        "Properties" : {
+            "TableName" : "Player",
+            "AttributeDefinitions" : [
+              {"AttributeName" : "PlayerId", "AttributeType" : "S"}
+            ],
+            "BillingMode" : "PAY_PER_REQUEST"
+        }
+    }
+  }
+}
