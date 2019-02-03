@@ -1,8 +1,11 @@
+
 {
-  "profile": "default",
-  "region": "eu-west-1",
-  "configuration": "Release",
-  "framework": "netcoreapp2.1",
-  "s3-prefix": "Lycan.Api/",
-  "template": "serverless.template"
+    "profile" : "default",
+    "region"  : "eu-west-1",
+    "configuration" : "Release",
+    "framework"     : "netcoreapp2.1",
+    "s3-prefix"     : "Lycan.Api/",
+    "template"      : "serverless.template",
+    "s3-bucket"     : "lycan-deployments",
+    "stack-name"    : "lycan-api"
 }

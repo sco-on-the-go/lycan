@@ -14,7 +14,7 @@
     "FunctionOnConnectAsync" : {
       "Type" : "AWS::Serverless::Function",
       "Properties": {
-        "Handler": "Lycan.Api::Lycan.Api.Functions::OnConnectAsync",
+        "Handler": "Lycan.Api::Lycan.Api.OnConnect::InvokeAsync",
         "Runtime": "dotnetcore2.1",
         "CodeUri": "",
         "Description": "Function that gets called on new connections",
@@ -41,13 +41,7 @@
         "MemorySize": 128,
         "Timeout": 30,
         "Role": null,
-        "Policies": [ "AWSLambdaFullAccess" ],
-        "Environment" : {
-          "Variables" : {
-            "GameTable" : {"Ref":"DynamoDBTableGame"},
-            "PlayerTable" : {"Ref":"DynamoDBTablePlayer"}
-          }
-        }
+        "Policies": [ "AWSLambdaFullAccess" ]
       }
     },
     
@@ -75,6 +69,9 @@
         "Type" : "AWS::DynamoDB::Table",
         "Properties" : {
             "TableName" : "Game",
+            "KeySchema" : [
+              {"AttributeName" : "GameId", "KeyType" : "HASH"}
+            ],
             "AttributeDefinitions" : [
               {"AttributeName" : "GameId", "AttributeType" : "S"}
             ],
@@ -85,8 +82,11 @@
         "Type" : "AWS::DynamoDB::Table",
         "Properties" : {
             "TableName" : "Player",
+            "KeySchema" : [
+              {"AttributeName" : "ConnectionId", "KeyType" : "HASH"}
+            ],
             "AttributeDefinitions" : [
-              {"AttributeName" : "PlayerId", "AttributeType" : "S"}
+              {"AttributeName" : "ConnectionId", "AttributeType" : "S"}
             ],
             "BillingMode" : "PAY_PER_REQUEST"
         }

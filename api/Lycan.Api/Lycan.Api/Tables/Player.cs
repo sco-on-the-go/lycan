@@ -20,7 +20,7 @@ namespace Lycan.Api
     public class Player
     {
         [DynamoDBHashKey]
-        public Guid PlayerId { get; set; }
+        public string ConnectionId { get; set; }
         public Guid GameId { get; set; }
         public string Name { get; set; }
         public bool IsReady { get; set; }
